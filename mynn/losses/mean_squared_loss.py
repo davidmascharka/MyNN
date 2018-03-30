@@ -27,11 +27,15 @@ class MeanSquaredLoss(Operation):
 
         where :math:`N` is the number of elements in `x` and `y`.
         '''
+        if isinstance(targets, Tensor):
+            targets = targets.data
+            
         self.variables = (outputs,)
         outs = outputs.data
-        
-        loss = np.mean((outs - targets) ** 2)
-        self.back = 2 * (outs - targets) / outs.shape[0]
+
+        tmp = outs - targets
+        self.back = 2 * tmp / outs.shape[0]
+        loss = np.sum(tmp ** 2)
         return loss
 
 

@@ -27,11 +27,15 @@ class L1Loss(Operation):
 
         where :math:`N` is the number of elements in `x` and `y`.
         '''
+        if isinstance(targets, Tensor):
+            targets = targets.data
+            
         self.variables = (outputs,)
         outs = outputs.data
-        loss = np.mean(np.abs(outs - targets))
+        tmp = outs - targets
+        loss = np.mean(np.abs(tmp))
 
-        self.back = np.sign(outs - targets) / outs.shape[0]
+        self.back = np.sign(tmp) / outs.shape[0]
         return loss
 
     def backward_var(self, grad, index, **kwargs):
