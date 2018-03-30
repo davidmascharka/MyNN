@@ -8,18 +8,25 @@ class L1Loss(Operation):
         '''
         Parameters
         ----------
-        outputs : mygrad.Tensor, shape=(N, any)
+        outputs : mygrad.Tensor, shape=(N,)
             The model outputs for each of the N pieces of data.
 
-        targets : numpy.ndarray, shape=(N, any)
+        targets : numpy.ndarray, shape=(N,)
             The correct value for each of the N pieces of data.
 
         Returns
         -------
         The average L¹ loss.
         '''
-        raise NotImplementedError
+        self.variables = (outputs,)
+        outs = outputs.data
+        loss = np.mean(np.abs(outs - targets))
 
+        self.back = np.sign(outs - targets) / outs.shape[0]
+        return loss
 
-    def backward_a(self, grad):
-        raise NotImplementedError
+    def backward_var(self, grad, index, **kwargs):
+        self.variables[index].backward(grad * self.back, **kwargs)
+
+def l1_loss(x, y):
+    return Tensor._op(L1Loss, x, op_args=(y,))
