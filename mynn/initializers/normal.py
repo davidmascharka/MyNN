@@ -1,19 +1,19 @@
 import numpy as np
 from mygrad import Tensor
 
-def normal(mean=0, std=1, shape=None):
+def normal(*shape, mean=0, std=1):
     ''' Initialize a :class:`mygrad.Tensor` by drawing from a normal (Gaussian) distribution.
-    
+
     Parameters
     ----------
+    shape : Sequence[int]
+        The output shape.
+
     mean : Real, optional (default=0)
         The mean of the distribution from which to draw.
 
     std : Real, optional (default=1)
         The standard deviation of the distribution from which to draw.
-
-    shape : Tuple[int], optional (default=None)
-        The output shape. If `None`, then the output is of shape ().
 
     Returns
     -------

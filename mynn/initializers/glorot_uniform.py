@@ -1,13 +1,13 @@
 import numpy as np
 from mygrad import Tensor
 
-def glorot_uniform(shape):
+def glorot_uniform(*shape):
     ''' Initialize a :class:`mygrad.Tensor` according to the uniform initialization procedure
     described by Glorot and Bengio.
 
     Parameters
     ----------
-    shape : Tuple[int, ..., int]
+    shape : Sequence[int]
         The shape of the output Tensor. Note that `shape` must be at least two-dimensional.
 
     Returns

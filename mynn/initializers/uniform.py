@@ -1,19 +1,19 @@
 import numpy as np
 from mygrad import Tensor
 
-def uniform(lower_bound=0, upper_bound=1, shape=None):
+def uniform(*shape, lower_bound=0, upper_bound=1):
     ''' Initialize a :class:`mygrad.Tensor` by drawing from a uniform distribution.
 
     Parameters
     ----------
+    shape : Sequence[int]
+        The output shape.
+
     lower_bound : Real, optional (default=0)
         Lower bound on the output interval, inclusive.
 
     upper_bound : Real, optional (default=1)
         Upper bound on the output interval, exclusive.
-
-    shape : Tuple[int], optional (default=None)
-        The output shape. If `None`, then the output is of shape ().
 
     Returns
     -------

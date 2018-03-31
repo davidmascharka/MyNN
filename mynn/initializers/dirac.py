@@ -1,13 +1,13 @@
 import numpy as np
 from mygrad import Tensor
 
-def dirac(shape):
+def dirac(*shape):
     ''' Initialize a :class:`mygrad.Tensor` according to the Dirac initialization procedure
     described by Zagoruyko and Komodakis.
 
     Parameters
     ----------
-    shape : Tuple[int, ..., int]
+    shape : Sequence[int]
         The shape of the output Tensor. Note that `shape` must be at least two-dimensional.
 
     Returns
