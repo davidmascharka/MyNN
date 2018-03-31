@@ -28,7 +28,10 @@ def he_normal(*shape, gain=1):
     A Tensor :math:`W` initialized in this way should be drawn from a distribution about
 
     .. math::
-        U[-\frac{\sqrt{6}}{(1+a^2)n_l}, \frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}]
+        \mathcal{N}(0, \sqrt{\frac{2}{(1+a^2)n_l}})
+
+    where :math:`a` is the slope of the rectifier following this layer, which is incorporated
+    using the `gain` variable above.
     '''
     assert len(shape) >= 2, 'He Normal initialization requires at least two dimensions!'
 
