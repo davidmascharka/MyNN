@@ -25,6 +25,12 @@ class CrossEntropyLoss(Operation):
         -------
         The average (weighted) cross-entropy loss.
         '''
+        if isinstance(targets, Tensor):
+            targets = targets.data
+
+        if isinstance(weights, Tensor):
+            weights = weights.data
+
         self.variables = (outputs,)
         scores = np.copy(outputs.data)
         max_scores = np.max(scores, axis=1, keepdims=True)
@@ -35,7 +41,6 @@ class CrossEntropyLoss(Operation):
         total_weight = np.sum(factors)
         
         loss = -np.sum(np.log(scores[label_locs]) * factors) / total_weight
-
         self.back = scores
         self.back[label_locs] -= 1
         self.back *= factors.reshape(-1, 1) / total_weight
