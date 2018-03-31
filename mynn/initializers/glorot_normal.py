@@ -1,7 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
-def glorot_normal(*shape):
+def glorot_normal(*shape, gain=1):
     ''' Initialize a :class:`mygrad.Tensor` according to the normal initialization procedure
     described by Glorot and Bengio.
 
@@ -9,6 +9,9 @@ def glorot_normal(*shape):
     ----------
     shape : Sequence[int]
         The shape of the output Tensor. Note that `shape` must be at least two-dimensional.
+
+    gain : Real, optional (default=1)
+        The gain (scaling factor) to apply.
 
     Returns
     -------
@@ -29,5 +32,5 @@ def glorot_normal(*shape):
     assert len(shape) >= 2, 'Glorot Normal initialization requires at least two dimensions!'
 
     tensor = np.empty(shape)
-    std = np.sqrt(2 / ((shape[0] + shape[1]) * tensor[0, 0].size))
+    std = gain * np.sqrt(2 / ((shape[0] + shape[1]) * tensor[0, 0].size))
     return Tensor(np.random.normal(0, std, shape))
