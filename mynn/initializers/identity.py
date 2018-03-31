@@ -1,12 +1,12 @@
 import numpy as np
 from mygrad import Tensor
 
-def identity(size=3):
+def identity(size):
     ''' Initialize the identity matrix of dimension `size`x`size`.
 
     Parameters
     ----------
-    size : int, optional (default=3)
+    size : int
         The size of the identity matrix.
 
     Returns

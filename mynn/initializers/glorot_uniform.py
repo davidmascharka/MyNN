@@ -1,13 +1,13 @@
 import numpy as np
 from mygrad import Tensor
 
-def glorot_uniform(shape=(3, 3)):
+def glorot_uniform(shape):
     ''' Initialize a :class:`mygrad.Tensor` according to the uniform initialization procedure
     described by Glorot and Bengio.
 
     Parameters
     ----------
-    shape : Tuple[int, ..., int], optional (default=(3, 3))
+    shape : Tuple[int, ..., int]
         The shape of the output Tensor. Note that `shape` must be at least two-dimensional.
 
     Returns
@@ -29,6 +29,5 @@ def glorot_uniform(shape=(3, 3)):
     assert len(shape) >= 2, 'Glorot Uniform initialization requires at least two dimensions!'
 
     tensor = np.empty(shape)
-    gain = 1
-    bound = gain * np.sqrt(6 / ((shape[0] + shape[1]) * tensor[0, 0].size))
+    bound = np.sqrt(6 / ((shape[0] + shape[1]) * tensor[0, 0].size))
     return Tensor(np.random.uniform(-bound, bound, shape))
