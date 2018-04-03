@@ -53,7 +53,7 @@ class SoftmaxFocalLoss(Operation):
         label_locs = (range(len(scores)), targets)
 
         pc = scores[label_locs]
-        one_m_pc = 1 - pc + 1e-14  # correct domain for when gamma < 1
+        one_m_pc = 1 - pc + 1e-14  # correct domain for when gamma < 1 and pc == 1
         log_pc = np.log(pc)
 
         loss = -np.mean(alpha * one_m_pc **gamma * log_pc)
