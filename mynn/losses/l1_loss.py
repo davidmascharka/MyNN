@@ -1,55 +1,14 @@
-from mygrad.operations import Operation
-from mygrad import Tensor
-import numpy as np
+from mygrad import mean, abs
 
-class L1Loss(Operation):
-    ''' Returns the L¹ loss Σ|xᵢ - yᵢ| averaged over the number of data points. '''
-    def __call__(self, outputs, targets):
-        '''
-        Parameters
-        ----------
-        outputs : mygrad.Tensor, shape=(N,)
-            The predictions for each of the N pieces of data.
-
-        targets : numpy.ndarray, shape=(N,)
-            The correct value for each of the N pieces of data.
-
-        Returns
-        -------
-        The average L¹ loss.
-
-        Extended Description
-        --------------------
-        The L1 loss is given by
-        
-        .. math::
-            \frac{1}{N}\sum\limits_{1}^{N}|x_i - y_i|
-
-        where :math:`N` is the number of elements in `x` and `y`.
-        '''
-        if isinstance(targets, Tensor):
-            targets = targets.data
-            
-        self.variables = (outputs,)
-        outs = outputs.data
-        tmp = outs - targets
-        loss = np.mean(np.abs(tmp))
-
-        self.back = np.sign(tmp) / outs.shape[0]
-        return loss
-
-    def backward_var(self, grad, index, **kwargs):
-        self.variables[index].backward(grad * self.back, **kwargs)
-
-def l1_loss(x, y):
+def l1_loss(outputs, targets):
     ''' Returns the L¹ loss Σ|xᵢ - yᵢ| averaged over the number of data points. 
 
     Parameters
     ----------
-    x : mygrad.Tensor, shape=(N,)
+    outputs : mygrad.Tensor, shape=(N,)
         The predictions for each of the N pieces of data.
 
-    y : numpy.ndarray, shape=(N,)
+    targets : numpy.ndarray, shape=(N,)
         The correct value for each of the N pieces of data.
 
     Returns
@@ -59,10 +18,10 @@ def l1_loss(x, y):
     Extended Description
     --------------------
     The L1 loss is given by
-
+    
     .. math::
         \frac{1}{N}\sum\limits_{1}^{N}|x_i - y_i|
 
     where :math:`N` is the number of elements in `x` and `y`.
     '''
-    return Tensor._op(L1Loss, x, op_args=(y,))
+    return mean(abs(outputs - targets))
