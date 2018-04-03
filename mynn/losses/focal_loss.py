@@ -82,7 +82,7 @@ def focal_loss_softmax(x, y, *, alpha=1, gamma=0):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The average focal loss.
     '''
     return Tensor._op(SoftmaxFocalLoss, x, op_args=(y, alpha, gamma))
