@@ -19,7 +19,7 @@ class LeakyReLU(Operation):
         Returns
         -------
         numpy.ndarray
-            The leaky-rectified `x` (elementwise max(x, 0) - slope*min(x, 0)).
+            The leaky-rectified `x` (elementwise max(x, 0) + slope*min(x, 0)).
         '''
         self.variables = (x,)
         return np.maximum(x.data, 0) + slope*np.minimum(x.data, 0)
