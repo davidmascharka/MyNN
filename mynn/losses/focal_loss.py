@@ -1,8 +1,10 @@
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
 from mygrad import Tensor
 import numpy as np
 
-class FocalLoss(Operation):
+__all__ = ["focal_loss_softmax"]
+
+class SoftmaxFocalLoss(Operation):
     ''' Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
     given by -ɑ(1-p)ˠlog(p).
 
@@ -15,11 +17,14 @@ class FocalLoss(Operation):
 
     where :math:`N` is the number of elements in `x` and `y`.
     '''
-    def __call__(self, outputs, targets, alpha, gamma):
+
+    scalar_only = True
+
+    def __call__(self, scores, targets, alpha, gamma):
         '''
         Parameters
         ----------
-        outputs : mygrad.Tensor, shape=(N, C)
+        scores : mygrad.Tensor, shape=(N, C)
             The C class scores for each of the N pieces of data.
 
         targets : Union[mygrad.Tensor, Sequence[int]], shape=(N,)
@@ -39,8 +44,8 @@ class FocalLoss(Operation):
         if isinstance(targets, Tensor):
             targets = targets.data
 
-        self.variables = (outputs,)
-        scores = np.copy(outputs.data)
+        self.variables = (scores,)
+        scores = np.copy(scores.data)
         max_scores = np.max(scores, axis=1, keepdims=True)
         np.exp(scores - max_scores, out=scores)
         scores /= np.sum(scores, axis=1, keepdims=True)
@@ -58,7 +63,8 @@ class FocalLoss(Operation):
     def backward_var(self, grad, index, **kwargs):
         self.variables[index].backward(grad * self.back, **kwargs)
 
-def focal_loss(x, y, alpha=1, gamma=0):
+
+def focal_loss_softmax(x, y, *, alpha=1, gamma=0):
     '''
     Parameters
     ----------
@@ -79,4 +85,4 @@ def focal_loss(x, y, alpha=1, gamma=0):
     numpy.ndarray
         The average focal loss.
     '''
-    return Tensor._op(FocalLoss, x, op_args=(y, alpha, gamma))
+    return Tensor._op(SoftmaxFocalLoss, x, op_args=(y, alpha, gamma))
