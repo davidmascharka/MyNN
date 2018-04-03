@@ -46,18 +46,22 @@ class SoftmaxFocalLoss(Operation):
 
         self.variables = (scores,)
         scores = np.copy(scores.data)
+
         max_scores = np.max(scores, axis=1, keepdims=True)
         np.exp(scores - max_scores, out=scores)
         scores /= np.sum(scores, axis=1, keepdims=True)
         label_locs = (range(len(scores)), targets)
-        correct_scores = scores[label_locs]
 
-        loss = -np.mean(alpha * (1-correct_scores)**gamma * np.log(correct_scores))
+        pc = scores[label_locs]
+        one_m_pc = 1 - pc + 1e-14  # correct domain for when gamma < 1
+        log_pc = np.log(pc)
+
+        loss = -np.mean(alpha * one_m_pc **gamma * log_pc)
 
         self.back = scores
-        self.back[label_locs] += (1 - correct_scores)**gamma * (gamma * correct_scores *
-                                                                np.log(correct_scores) - 1)
-        self.back /= scores.shape[0]
+        self.back[label_locs] -= 1
+        self.back *= (one_m_pc ** gamma - pc * gamma * one_m_pc**(gamma - 1) * log_pc)[:, np.newaxis]
+        self.back *= (alpha / scores.shape[0])
         return loss
     
     def backward_var(self, grad, index, **kwargs):
