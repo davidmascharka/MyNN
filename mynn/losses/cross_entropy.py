@@ -49,7 +49,7 @@ class CrossEntropyLoss(Operation):
     def backward_var(self, grad, index, **kwargs):
         self.variables[index].backward(grad * self.back, **kwargs)
 
-def cross_entropy(x, y, weights=None):
+def cross_entropy(x, y, *, weights=None):
     '''
     Parameters
     ----------

@@ -1,6 +1,6 @@
 from mygrad import Tensor, sum
 
-def negative_log_likelihood(outputs, targets, weights=None):
+def negative_log_likelihood(outputs, targets, *, weights=None):
     ''' Returns the (weighted) negative log-likelihood loss between outputs and targets.
     
     Note that this does not compute a softmax, so you should input log-probabilities to this.
