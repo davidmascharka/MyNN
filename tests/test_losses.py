@@ -1,4 +1,4 @@
-from mynn.losses.focal_loss import focal_loss_softmax
+from mynn.losses.focal_loss import softmax_focal_loss
 
 from mygrad import Tensor, sum, log
 from mygrad.nnet.activations import softmax
@@ -38,7 +38,7 @@ def test_focal_loss(num_datum, num_classes, alpha, gamma, data, grad):
     mygrad_focal_loss = sum(truth * (-alpha * (1 - probs + 1e-14)**gamma * log(probs))) / num_datum
     mygrad_focal_loss.backward(grad)
 
-    nn_loss = focal_loss_softmax(scores_nn, targets, alpha=alpha, gamma=gamma)
+    nn_loss = softmax_focal_loss(scores_nn, targets, alpha=alpha, gamma=gamma)
     nn_loss.backward(grad)
 
     assert isinstance(nn_loss, Tensor) and nn_loss.ndim == 0
