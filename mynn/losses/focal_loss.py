@@ -2,7 +2,7 @@ from mygrad.operation_base import Operation
 from mygrad import Tensor
 import numpy as np
 
-__all__ = ["focal_loss_softmax"]
+__all__ = ['softmax_focal_loss']
 
 class SoftmaxFocalLoss(Operation):
     ''' Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
@@ -17,7 +17,6 @@ class SoftmaxFocalLoss(Operation):
 
     where :math:`N` is the number of elements in `x` and `y`.
     '''
-
     scalar_only = True
 
     def __call__(self, scores, targets, alpha, gamma):
@@ -60,7 +59,7 @@ class SoftmaxFocalLoss(Operation):
 
         self.back = scores
         self.back[label_locs] -= 1
-        self.back *= (one_m_pc ** gamma - pc * gamma * one_m_pc**(gamma - 1) * log_pc)[:, np.newaxis]
+        self.back *= (one_m_pc**gamma - pc * gamma * one_m_pc**(gamma - 1) * log_pc)[:, np.newaxis]
         self.back *= (alpha / scores.shape[0])
         return loss
     
@@ -68,7 +67,7 @@ class SoftmaxFocalLoss(Operation):
         self.variables[index].backward(grad * self.back, **kwargs)
 
 
-def focal_loss_softmax(x, y, *, alpha=1, gamma=0):
+def softmax_focal_loss(x, y, *, alpha=1, gamma=0):
     '''
     Parameters
     ----------
