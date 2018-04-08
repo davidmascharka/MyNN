@@ -38,7 +38,7 @@ def leaky_relu(x, slope):
         Input data.
 
     slope : Real
-        The slop of the negative activation.
+        The slope of the negative activation.
 
     Returns
     -------
