@@ -1,4 +1,5 @@
 from mygrad import Tensor, sum
+import numpy as np
 
 def negative_log_likelihood(outputs, targets, *, weights=None):
     ''' Returns the (weighted) negative log-likelihood loss between outputs and targets.
@@ -25,5 +26,5 @@ def negative_log_likelihood(outputs, targets, *, weights=None):
         targets = targets.data
 
     label_locs = (range(len(targets)), targets)
-    factors = weights[targets] if weights is not None else np.ones_like(outputs.data)
+    factors = weights[targets] if weights is not None else np.ones_like(targets)
     return -sum(outputs[label_locs] * factors) / sum(factors)
