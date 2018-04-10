@@ -1,8 +1,8 @@
 from mygrad.operation_base import Operation
-from mygrad import Tensor
+from mygrad import Tensor, mean, log
 import numpy as np
 
-__all__ = ['softmax_focal_loss']
+__all__ = ['softmax_focal_loss', 'focal_loss']
 
 class SoftmaxFocalLoss(Operation):
     ''' Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
@@ -89,3 +89,37 @@ def softmax_focal_loss(x, y, *, alpha=1, gamma=0):
         The average focal loss.
     '''
     return Tensor._op(SoftmaxFocalLoss, x, op_args=(y, alpha, gamma))
+
+def focal_loss(scores, targets, *, alpha=1, gamma=0):
+    ''' Return the focal loss.
+
+    Parameters
+    ----------
+    scores : mygrad.Tensor, shape=(N, C)
+        The C class scores for each of the N pieces of data.
+
+    targets : Sequence[int], shape=(N,)
+        The correct class indices, in [0, C), for each datum.
+
+    alpha : Real, optional (default=1)
+        The ɑ weighting factor in the loss formulation.
+
+    gamma : Real, optional (default=0)
+        The ɣ focusing parameter. Note that for Ɣ=0 and ɑ=1, this is cross-entropy loss.
+
+    Returns
+    -------
+    mygrad.Tensor
+        The average focal loss.
+
+    Notes
+    -----
+    This function does not perform a softmax before computing the loss. If you ned to take the 
+    softmax before computing the loss, see :class:`SoftmaxFocalLoss` instead.
+    '''
+    if isinstance(targets, Tensor):
+        targets = targets.data
+        
+    label_locs = (range(len(targets)), targets)
+    pc = scores[label_locs]
+    return -mean(alpha * (1 - pc + 1e-14)**gamma * log(pc))
