@@ -1,4 +1,4 @@
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
 from mygrad import Tensor
 import numpy as np
 
