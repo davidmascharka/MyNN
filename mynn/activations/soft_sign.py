@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
+from mygrad import abs
 
 class SoftSign(Operation):
     ''' Returns the soft sign function x/(1 + |x|) elementwise along x '''

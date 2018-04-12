@@ -1,9 +1,9 @@
 import numpy as np
 from mygrad import Tensor
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
 
-class SoftMax(Operation):
-    ''' Returns the SoftMax function elementwise along x given by exp(x) / ∑j exp(xj)'''
+class Softmax(Operation):
+    ''' Returns the SoftMax function exp(xᵢ) / ∑exp(xⱼ)'''
     def __call__(self, x):
         '''
         Parameters
@@ -17,16 +17,17 @@ class SoftMax(Operation):
             elementwise exp(x) / ∑j exp(xj).
         '''
         self.variables = (x,)
-        shiftx = x.data - np.max(x.data)
-        exps = np.exp(shiftx)
-        self.value = exps / np.sum(exps)
-        SM = self.value.reshape((-1,1))
-        self.jac = np.diag(self.value) - np.dot(SM, SM.T)
-        return self.value
+        assert 0 < x.ndim < 3
+        self.__kw = dict(axis=1, keepdims=True) if x.ndim == 2 else dict(axis=None, keepdims=False)
+        x.data = x.data - x.data.max(**self.__kw)
+        np.exp(x.data, out=x.data)
+        x.data /= x.data.sum(**self.__kw)
+        return x.data
 
     def backward_var(self, grad, index, **kwargs):
-        x = self.variables[index]
-        x.backward(grad * self.jac[index], **kwargs)
+        soft = self(x.data)
+        sg = soft * grad
+        x.backward(sg - soft * np.sum(sg, **self.__kw), **kwargs)
 
 def softmax(x):
     ''' Returns the SoftMax function elementwise along x given by exp(x) / ∑j exp(xj)
@@ -39,6 +40,9 @@ def softmax(x):
     Returns
     -------
     numpy.ndarray
-            elementwise exp(x) / ∑j exp(xj).
+            The softmax function is given by
+
+            .. math::
+                softmax(x_i) = \frac{e^{x_i}}{\sum\limits_1^N e^{x_j}}
     '''
-    return Tensor._op(SoftMax, x)
+    return Tensor._op(Softmax, x)
