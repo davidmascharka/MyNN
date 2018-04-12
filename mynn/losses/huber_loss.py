@@ -29,7 +29,7 @@ class HuberLoss(Operation):
         targets : Union[mygrad.Tensor, numpy.ndarray], shape=(N, any)
             The target for each datum.
 
-        delta : Real, optional (default=1)
+        delta : Real > 0, optional (default=1)
             The value under which to use a squared error.
 
         Returns
@@ -37,6 +37,8 @@ class HuberLoss(Operation):
         numpy.ndarray
             The average Huber loss.
         '''
+        assert delta > 0, "Delta must be > 0"
+
         if isinstance(targets, Tensor):
             targets = targets.data
 
@@ -70,7 +72,7 @@ def huber_loss(x, y, *, delta=1):
     targets : Union[mygrad.Tensor, numpy.ndarray], shape=(N, any)
         The target for each datum.
 
-    delta : Real, optional (default=1)
+    delta : Real > 0, optional (default=1)
         The value under which to use a squared error.
 
     Returns
