@@ -60,4 +60,32 @@ class HuberLoss(Operation):
         self.variables[index].backward(grad * self.back, **kwargs)
 
 def huber_loss(x, y, *, delta=1):
+    ''' Returns the Huber loss (smooth L1).
+
+    Parameters
+    ----------
+    outputs : mygrad.Tensor, shape=(N, any)
+        The output for each of the N pieces of data.
+
+    targets : Union[mygrad.Tensor, numpy.ndarray], shape=(N, any)
+        The target for each datum.
+
+    delta : Real, optional (default=1)
+        The value under which to use a squared error.
+
+    Returns
+    -------
+    numpy.ndarray
+        The average Huber loss.
+
+    Extended Description
+    --------------------
+    The Huber loss is given by
+
+    .. math::
+        L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l} 
+            \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
+            \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
+
+    '''
     return Tensor._op(HuberLoss, x, op_args=(y, delta))
