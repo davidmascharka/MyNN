@@ -1,6 +1,6 @@
 import numpy as np
 from mygrad import Tensor
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
 
 class LeakyReLU(Operation):
     ''' Returns the leaky rectified linear activation elementwise along x. The leaky ReLU is given
@@ -38,7 +38,7 @@ def leaky_relu(x, slope):
         Input data.
 
     slope : Real
-        The slop of the negative activation.
+        The slope of the negative activation.
 
     Returns
     -------
