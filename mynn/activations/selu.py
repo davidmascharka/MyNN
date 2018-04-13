@@ -23,7 +23,7 @@ class SELU(Operation):
         Returns
         -------
         numpy.ndarray
-            The ELU function applied to `x` elementwise.
+            The SELU function applied to `x` elementwise.
         '''
         self.variables = (x,)
 
