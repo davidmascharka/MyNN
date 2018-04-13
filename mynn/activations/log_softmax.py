@@ -1,4 +1,4 @@
-from mygrad import Tensor, log, exp
+from mygrad import log, exp
 
 def log_softmax(x):
     ''' Returns the log softmax log(exp(x) / Σexp(x)). However, this implementation is faster and
