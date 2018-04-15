@@ -1,6 +1,6 @@
 import numpy as np
 from mygrad import Tensor
-from mygrad.operations import Operation
+from mygrad.operation_base import Operation
 
 class ReLU(Operation):
     ''' Returns the rectified linear activation max(x, 0) elementwise along x. '''
