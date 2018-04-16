@@ -1,5 +1,7 @@
 from mygrad import log, exp
 
+__all__ = ['log_softmax']
+
 def log_softmax(x):
     ''' Returns the log softmax log(exp(x) / Σexp(x)). However, this implementation is faster and
     more numerically-stable than performing the softmax followed by the log.

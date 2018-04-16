@@ -2,6 +2,8 @@ import numpy as np
 from mygrad import Tensor
 from mygrad.operation_base import Operation
 
+__all__ = ['elu']
+
 class ELU(Operation):
     ''' Returns the exponential linear activation (ELU) elementwise along x. The ELU is given by 
     ɑ(exp(x) - 1) for x < 0 and x for x ≥ 0.
