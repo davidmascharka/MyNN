@@ -1,6 +1,9 @@
 import numpy as np
+
 from mygrad import Tensor
 from mygrad.operation_base import Operation
+
+__all__ = ['selu']
 
 class SELU(Operation):
     ''' Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
