@@ -1,5 +1,4 @@
 from mygrad.linalg import einsum
-from mygrad import add
 
 from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
@@ -35,7 +34,6 @@ class dense:
         self.weight = weight_initializer(input_size, output_size, **weight_kwargs)
         self.bias = bias_initializer(1, output_size, **bias_kwargs)
         self.bias.data = self.bias.data.astype(self.weight.dtype)
-        self.training = True # whether we're in train or eval mode
 
     def __call__(self, x):
         ''' Perform the forward-pass of the densely-connected layer over `x`.
@@ -50,8 +48,7 @@ class dense:
         mygrad.Tensor
             The result of applying the dense layer wx + b.
         '''
-        return add(einsum('ij,jk', x, self.weight, constant=(not self.training)),
-                   self.bias, constant=(not self.training))
+        return einsum('ij,jk', x, self.weight) + self.bias
 
     @property
     def parameters(self):

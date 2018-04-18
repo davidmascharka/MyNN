@@ -1,7 +1,6 @@
 import numpy as np
 
 from mygrad.nnet.layers.conv import conv_nd
-from mygrad import add
 
 from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
@@ -52,7 +51,6 @@ class conv:
         self.bias.data = self.bias.data.astype(self.weight.dtype)
         self.stride = stride
         self.padding = padding
-        self.training = True
 
     def __call__(self, x):
         ''' Perform the forward-pass of the n-dimensional convolutional layer over `x`.
@@ -67,8 +65,7 @@ class conv:
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
         '''
-        return add(conv_nd(x, self.weight, self.stride, self.padding, constant=(not self.training)),
-                   self.bias, constant=(not self.training))
+        return conv_nd(x, self.weight, self.stride, self.padding) + self.bias
 
     @property
     def parameters(self):
