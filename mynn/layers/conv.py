@@ -72,7 +72,7 @@ class conv:
 
     @property
     def parameters(self):
-        ''' Access the parameters of the model.
+        ''' Access the parameters of the layer.
 
         Returns
         -------

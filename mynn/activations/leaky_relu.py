@@ -11,8 +11,8 @@ def leaky_relu(x, slope):
     x : mygrad.Tensor
         Input data.
 
-    slope : Real
-        The slop of the negative activation.
+    slope : Union[Real, mygrad.Tensor]
+        The slope of the negative activation.
 
     Returns
     -------

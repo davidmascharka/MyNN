@@ -35,7 +35,7 @@ class dense:
         self.weight = weight_initializer(input_size, output_size, **weight_kwargs)
         self.bias = bias_initializer(1, output_size, **bias_kwargs)
         self.bias.data = self.bias.data.astype(self.weight.dtype)
-        self.training = True
+        self.training = True # whether we're in train or eval mode
 
     def __call__(self, x):
         ''' Perform the forward-pass of the densely-connected layer over `x`.
@@ -55,7 +55,7 @@ class dense:
 
     @property
     def parameters(self):
-        ''' Access the parameters of the model.
+        ''' Access the parameters of the layer.
 
         Returns
         -------
