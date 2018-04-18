@@ -13,7 +13,7 @@ def log_softmax(x):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The log-softmax of `x`.
     '''
     assert 0 < x.ndim < 3, 'Input must be 1- or 2-dimensional.'

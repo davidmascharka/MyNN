@@ -17,6 +17,18 @@ class prelu:
         self.slope = Tensor(slope)
 
     def __call__(self, x):
+        ''' Forward the input through the PReLU.
+
+        Parameters
+        ----------
+        x : Union[numpy.ndarray, mygrad.Tensor]
+            The data, to which to apply the PReLU.
+
+        Returns
+        -------
+        mygrad.Tensor
+            The result of applying the PReLU elementwise across `x`.
+        '''
         return leaky_relu(x, self.slope)
 
     @property

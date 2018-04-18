@@ -51,7 +51,7 @@ def selu(x):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The SELU function applied to `x` elementwise.
 
     Notes

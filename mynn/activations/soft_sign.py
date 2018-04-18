@@ -12,7 +12,7 @@ def soft_sign(x):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The soft sign function applied to `x` elementwise.
     '''
     return x / (1 + abs(x))

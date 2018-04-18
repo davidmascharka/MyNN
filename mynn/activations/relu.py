@@ -12,7 +12,7 @@ def relu(x):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The rectified `x` (elementwise max(x, 0)).
     '''
     return maximum(x, 0)

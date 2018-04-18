@@ -48,7 +48,7 @@ def elu(x, alpha):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor
         The ELU function applied to `x` elementwise.
     '''
     return Tensor._op(ELU, x, op_args=(alpha,))
