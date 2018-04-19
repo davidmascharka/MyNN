@@ -40,7 +40,7 @@ class CrossEntropyLoss(Operation):
         factors = weights[targets] if weights is not None else np.ones_like(targets)
         total_weight = np.sum(factors)
         
-        loss = -np.sum(np.log(scores[label_locs]) * factors) / total_weight
+        loss = -np.sum(np.log(scores[label_locs] + 1e-14) * factors) / total_weight
         self.back = scores
         self.back[label_locs] -= 1
         self.back *= factors.reshape(-1, 1) / total_weight
