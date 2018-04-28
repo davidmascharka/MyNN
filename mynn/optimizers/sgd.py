@@ -11,15 +11,19 @@ class SGD:
     learning_rate : Real, optional (default=0.1)
         The step size.
 
-    momentum : Real ∈ [0, 1), optional (default=0.0)
+    momentum : Real ∈ [0, 1), optional (default=0)
         The momentum term.
+
+    weight_decay : Real, optional (default=0)
+        The weight decay term.
     '''
-    def __init__(self, params, *, learning_rate=0.1, momentum=0.0):
+    def __init__(self, params, *, learning_rate=0.1, momentum=0, weight_decay=0):
         assert 0 <= momentum < 1, 'Momentum must lie within [0, 1)'
 
         self.params = params
         self.learning_rate = learning_rate
         self.momentum = momentum
+        self.weight_decay = weight_decay
 
         self.param_moments = []
         if momentum != 0:
@@ -44,14 +48,16 @@ class SGD:
             if param.grad is None:
                 continue
 
+            update = -self.weight_decay * param.data if param.ndim > 1 else 0 # no decay on bias
+            
             # perform the momentum update
             if self.momentum != 0:
                 moment = self.param_moments[idx]
                 moment *= self.momentum
                 moment -= self.learning_rate * param.grad
-                update = moment
+                update += moment
             else:
-                update = -self.learning_rate * param.grad
+                update += -self.learning_rate * param.grad
 
             # update parameters
             param.data += update
