@@ -20,6 +20,8 @@ class Adam:
     eps : float, optional (default=1e-08)
         Epsilon value to prevent divide-by-zero.
         
+    weight_decay : Real, optional (default=0)
+        The weight decay term.
 
     Extended Description
     --------------------
@@ -30,6 +32,8 @@ class Adam:
     '''
     def __init__(self, params, *, learning_rate=0.001, beta1=0.9, beta2=0.999, eps=1e-08,
                  weight_decay=0):
+        assert 0 <= beta1 < 1
+        assert 0 <= beta2 < 1
         self.params = params
         self.learning_rate = learning_rate
         self.beta1 = beta1
