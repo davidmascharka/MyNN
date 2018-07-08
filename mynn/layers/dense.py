@@ -1,4 +1,4 @@
-from mygrad.linalg import einsum
+from mygrad import matmul
 
 from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
@@ -48,7 +48,7 @@ class dense:
         mygrad.Tensor
             The result of applying the dense layer wx + b.
         '''
-        return einsum('ij,jk', x, self.weight) + self.bias
+        return matmul(x, self.weight) + self.bias
 
     @property
     def parameters(self):
