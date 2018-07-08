@@ -18,4 +18,4 @@ def softmax_cross_entropy(x, y, *, weights=None):
     -------
     The average cross-entropy loss.
     '''
-    return negative_log_likelihood(log_softmax(x), y)
+    return negative_log_likelihood(log_softmax(x), y, weights=weights)
