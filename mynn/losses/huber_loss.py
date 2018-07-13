@@ -1,7 +1,7 @@
 import numpy as np
 
 from mygrad.operation_base import Operation
-from mygrad import Tensor, abs, mean
+from mygrad import Tensor
 
 __all__ = ['huber_loss']
 
@@ -61,6 +61,7 @@ class HuberLoss(Operation):
     def backward_var(self, grad, index, **kwargs):
         self.variables[index].backward(grad * self.back, **kwargs)
 
+
 def huber_loss(x, y, *, delta=1):
     ''' Returns the Huber loss (smooth L1).
 
@@ -77,7 +78,7 @@ def huber_loss(x, y, *, delta=1):
 
     Returns
     -------
-    numpy.ndarray
+    mygrad.Tensor, shape=()
         The average Huber loss.
 
     Extended Description

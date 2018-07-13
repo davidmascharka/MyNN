@@ -16,6 +16,7 @@ def softmax_cross_entropy(x, y, *, weights=None):
    
     Returns
     -------
-    The average cross-entropy loss.
+    mygrad.Tensor, shape=()
+        The average cross-entropy loss.
     '''
     return negative_log_likelihood(log_softmax(x), y, weights=weights)

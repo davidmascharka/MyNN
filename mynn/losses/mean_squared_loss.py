@@ -13,7 +13,8 @@ def mean_squared_loss(outputs, targets):
 
     Returns
     -------
-    The mean squared error.
+    mygrad.Tensor, shape=()
+        The mean squared error.
 
     Extended Description
     --------------------

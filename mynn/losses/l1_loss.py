@@ -13,7 +13,8 @@ def l1_loss(outputs, targets):
 
     Returns
     -------
-    The average L¹ loss.
+    mygrad.Tensor, shape=()
+        The average L¹ loss.
 
     Extended Description
     --------------------
