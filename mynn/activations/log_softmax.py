@@ -1,24 +1,23 @@
-from mygrad import log, exp
+from mygrad.nnet.activations import logsoftmax as mygrad_log_softmax
 
 __all__ = ['log_softmax']
 
 def log_softmax(x):
-    ''' Returns the log softmax log(exp(x) / Σexp(x)). However, this implementation is faster and
-    more numerically-stable than performing the softmax followed by the log.
+    ''' Returns the log softmax of x along its trailing dimension:
+
+        log(exp(x) / Σexp(x))
+
+    However, this implementation is faster and more numerically-stable
+    than performing the softmax followed by the log.
 
     Parameters
     ----------
-    x : mygrad.Tensor
+    x : mygrad.Tensor, shape=(N, C) or shape=(C,)
         Input data.
 
     Returns
     -------
-    mygrad.Tensor
+    mygrad.Tensor, shape=(N,) or shape=()
         The log-softmax of `x`.
     '''
-    assert 0 < x.ndim < 3, 'Input must be 1- or 2-dimensional.'
-
-    kw = dict(axis=1, keepdims=True) if x.ndim == 2 else dict(axis=None, keepdims=False)
-    
-    x = x - x.max(**kw)
-    return x - log(exp(x).sum(**kw))
+    return mygrad_log_softmax(x)
