@@ -15,6 +15,7 @@ def kl_divergence(outputs, targets):
 
     Returns
     -------
-    The mean Kullback-Leibler divergence.
+    mygrad.Tensor, shape=()
+        The mean Kullback-Leibler divergence.
     '''
     return mean(targets * (log(targets) - outputs))

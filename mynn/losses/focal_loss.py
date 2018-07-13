@@ -4,6 +4,7 @@ import numpy as np
 
 __all__ = ['softmax_focal_loss', 'focal_loss']
 
+
 class SoftmaxFocalLoss(Operation):
     ''' Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
     given by -ɑ(1-p)ˠlog(p).
@@ -89,6 +90,7 @@ def softmax_focal_loss(x, y, *, alpha=1, gamma=0):
         The average focal loss.
     '''
     return Tensor._op(SoftmaxFocalLoss, x, op_args=(y, alpha, gamma))
+
 
 def focal_loss(scores, targets, *, alpha=1, gamma=0):
     ''' Return the focal loss.
