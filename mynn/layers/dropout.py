@@ -18,13 +18,13 @@ class dropout:
     are scaled by 1 / (1-p) so that the magnitude of `x`, on average, remains
     unchanged.
 
-    >>> dropout(x, prob_dropout=0.33)
+    >>> dropout(x, prob_dropout=0.5)
     Tensor([2., 0., 6.])
 
-    >>> dropout(x, prob_dropout=0.33)
+    >>> dropout(x, prob_dropout=0.5)
     Tensor([0., 0., 6.])
 
-    >>> dropout(x, prob_dropout=0.33)
+    >>> dropout(x, prob_dropout=0.5)
     Tensor([2., 4., 0.])
     '''
     def __init__(self, prob_dropout):
