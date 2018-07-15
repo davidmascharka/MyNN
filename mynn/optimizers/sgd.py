@@ -42,13 +42,13 @@ class SGD:
 
         where θ is the parameter list of the model, η is the learning rate, μ is the weighting on 
         the momentum term, and ν is the moment of each parameter. Note that if the momentum term is
-        0, this simlifies to θ = θ - η(dθ)
+        0, this simplifies to θ = θ - η(dθ)
         '''
         for idx, param in enumerate(self.params):
             if param.grad is None:
                 continue
 
-            update = -self.weight_decay * param.data if param.ndim > 1 else 0 # no decay on bias
+            update = -self.weight_decay * param.data if param.ndim > 1 else 0  # no decay on bias
             
             # perform the momentum update
             if self.momentum != 0:
