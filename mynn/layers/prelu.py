@@ -8,12 +8,12 @@ class prelu:
     This class maintains the learned slope parameter of a PReLU unit, which is a leaky ReLU with
     learned slope in the negative region.
 
-    Parameters
-    ----------
-    slope : Real, optional (default=0.1)
-        The initial value to use for the slope.
     '''
     def __init__(self, slope=0.1):
+        """ Parameters
+            ----------
+            slope : Real, optional (default=0.1)
+                The initial value to use for the slope."""
         self.slope = Tensor(slope)
 
     def __call__(self, x):
