@@ -10,8 +10,7 @@ class dense:
     input tensor with a (D, M)-shape weight tensor and a (M,)-shape bias.
     '''
     def __init__(self, input_size, output_size, *, weight_initializer=uniform,
-                 bias_initializer=constant, weight_kwargs={}, bias_kwargs={}):
-
+                 bias_initializer=constant, weight_kwargs=None, bias_kwargs=None):
         """
             Parameters
             ----------
@@ -27,13 +26,14 @@ class dense:
             bias_initializer : Callable, optional (default=initializers.constant)
                 The function to use to initialize the bias vector.
 
-            weight_kwargs : dictionary, optional (default={})
+            weight_kwargs : Optional[dictionary]
                 The keyword arguments to pass to the weight initialization function.
 
-            bias_kwargs : dictionary, optional (default={})
+            bias_kwargs : Optional[dictionary]
                 The keyword arguments to pass to the bias initialization function."""
-        self.weight = weight_initializer(input_size, output_size, **weight_kwargs)
-        self.bias = bias_initializer(1, output_size, **bias_kwargs)
+
+        self.weight = weight_initializer(input_size, output_size, **(weight_kwargs if weight_kwargs is not None else {}))
+        self.bias = bias_initializer(1, output_size, **(bias_kwargs if bias_kwargs is not None else {}))
         self.bias.data = self.bias.data.astype(self.weight.dtype)
 
     def __call__(self, x):
