@@ -39,12 +39,12 @@ class dropout:
         self.p_dropout = prob_dropout
 
     def __call__(self, x):
-        ''' Perform the forward-pass of the n-dimensional convolutional layer over `x`.
+        ''' Perform the dropout on `x`
 
         Parameters
         ----------
         x : Union[numpy.ndarray, mygrad.Tensor]
-            The data to whose elements will each be dropped with probability p.
+            The data whose elements will each be dropped with probability p.
 
         Returns
         -------
