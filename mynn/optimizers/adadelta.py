@@ -19,7 +19,7 @@ class Adadelta:
     --------------------
     This optimizer implements the Adadelta optimization procedure described in the paper
       "ADADELTA: An Adaptive Learning Rate Method"
-      Person
+      Matthew Zeiler
     https://arxiv.org/abs/1212.5701
     '''
     def __init__(self, params, *, rho=0.95, eps=1e-06):

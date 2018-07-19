@@ -11,29 +11,32 @@ class dense:
     '''
     def __init__(self, input_size, output_size, *, weight_initializer=uniform,
                  bias_initializer=constant, weight_kwargs=None, bias_kwargs=None):
-        """
-            Parameters
-            ----------
-            input_size : int
-                The number of features for each input datum.
+        ''' Initialize a dense layer.
 
-            output_size : int
-                The number of output units (neurons).
+        Parameters
+        ----------
+        input_size : int
+            The number of features for each input datum.
 
-            weight_initializer : Callable, optional (default=initializers.uniform)
-                The function to use to initialize the weight matrix.
+        output_size : int
+            The number of output units (neurons).
 
-            bias_initializer : Callable, optional (default=initializers.constant)
-                The function to use to initialize the bias vector.
+        weight_initializer : Callable, optional (default=initializers.uniform)
+            The function to use to initialize the weight matrix.
 
-            weight_kwargs : Optional[dictionary]
-                The keyword arguments to pass to the weight initialization function.
+        bias_initializer : Callable, optional (default=initializers.constant)
+            The function to use to initialize the bias vector.
 
-            bias_kwargs : Optional[dictionary]
-                The keyword arguments to pass to the bias initialization function."""
+        weight_kwargs : Optional[dictionary]
+            The keyword arguments to pass to the weight initialization function.
 
-        self.weight = weight_initializer(input_size, output_size, **(weight_kwargs if weight_kwargs is not None else {}))
-        self.bias = bias_initializer(1, output_size, **(bias_kwargs if bias_kwargs is not None else {}))
+        bias_kwargs : Optional[dictionary]
+            The keyword arguments to pass to the bias initialization function.
+        '''
+        self.weight = weight_initializer(input_size, output_size,
+                                         **(weight_kwargs if weight_kwargs is not None else {}))
+        self.bias = bias_initializer(1, output_size,
+                                     **(bias_kwargs if bias_kwargs is not None else {}))
         self.bias.data = self.bias.data.astype(self.weight.dtype)
 
     def __call__(self, x):

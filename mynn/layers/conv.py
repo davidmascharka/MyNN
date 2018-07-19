@@ -10,39 +10,41 @@ class conv:
 
     This class will perform an n-dimensional convolution on an (N, K, ...)-shape input Tensor
     with a (D, K, ...,)-shape weight Tensor, then add a (D,)-shape bias vector to the result.
-
     '''
     def __init__(self, input_size, output_size, *filter_dims, stride=1, padding=0,
                  weight_initializer=uniform, bias_initializer=constant, weight_kwargs=None,
                  bias_kwargs=None):
-        """ Parameters
-            ----------
-            input_size : int
-                The number of feature channels (depth) for each input datum.
+        ''' Initialize a conv layer.
 
-            output_size : int
-                The number of feature channels (depth) for the output.
+        Parameters
+        ----------
+        input_size : int
+            The number of feature channels (depth) for each input datum.
 
-            filter_dims : Sequence[int]
-                The dimensions of the convolutional filters.
+        output_size : int
+            The number of feature channels (depth) for the output.
 
-            stride : int, optional (default=1)
-                The stride at which to move across the input.
+        filter_dims : Sequence[int]
+            The dimensions of the convolutional filters.
 
-            padding : int, optional (default=0)
-                The amount of zero-padding to add before performing the forward-pass.
+        stride : int, optional (default=1)
+            The stride at which to move across the input.
 
-            weight_initializer : Callable, optional (default=initializers.uniform)
-                The function to use to initialize the weight tensor.
+        padding : int, optional (default=0)
+            The amount of zero-padding to add before performing the forward-pass.
 
-            bias_initializer : Callable, optional (default=initializers.constant)
-                The function to use to initialize the bias vector.
+        weight_initializer : Callable, optional (default=initializers.uniform)
+            The function to use to initialize the weight tensor.
 
-            weight_kwargs : Optional[dictionary]
-                The keyword arguments to pass to the weight initialization function.
+        bias_initializer : Callable, optional (default=initializers.constant)
+            The function to use to initialize the bias vector.
 
-            bias_kwargs : Optional[dictionary]
-                The keyword arguments to pass to the bias initialization function."""
+        weight_kwargs : Optional[dictionary]
+            The keyword arguments to pass to the weight initialization function.
+
+        bias_kwargs : Optional[dictionary]
+            The keyword arguments to pass to the bias initialization function.
+        '''
         if np.ndim(filter_dims) > 1:      # if the user passes in a Sequence
             filter_dims = filter_dims[0]  # unpack it from the outer Tuple
 

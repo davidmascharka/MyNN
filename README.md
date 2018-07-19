@@ -16,7 +16,13 @@ python setup.py develop
 
 If you don't have MyGrad installed, then you can run
 
-*add setup instructions once we figure this out*
+``` shell
+git clone https://github.com/rsokl/MyGrad.git
+cd MyGrad
+python setup.py develop
+```
+
+Then clone and install this repository.
 
 ## Quickstart
-Put in a nice, small example here.
+Please see the [example notebooks](examples/) for a gentle introduction.
