@@ -52,7 +52,7 @@ class conv:
         bias_kwargs = bias_kwargs if bias_kwargs is not None else {}
 
         self.weight = weight_initializer(output_size, input_size, *filter_dims, **weight_kwargs)
-        self.bias = bias_initializer(output_size, **bias_kwargs).reshape(1, -1, 1, 1)
+        self.bias = bias_initializer(output_size, **bias_kwargs).reshape(1, -1, *(1 for _ in range(len(filter_dims))))
         self.bias.data = self.bias.data.astype(self.weight.dtype)
         self.stride = stride
         self.padding = padding
