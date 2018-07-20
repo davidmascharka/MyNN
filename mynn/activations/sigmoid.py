@@ -1,4 +1,4 @@
-from mygrad import reciprocal, exp
+from mygrad.nnet.activations import sigmoid as mygrad_sigmoid
 
 __all__ = ['sigmoid']
 
@@ -22,4 +22,4 @@ def sigmoid(x):
     .. math::
         \sigma(x) = \frac{e^x}{e^x + 1}
     '''
-    return reciprocal(1 + exp(-x))
+    return mygrad_sigmoid(x, constant=False)
