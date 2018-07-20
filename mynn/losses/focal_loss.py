@@ -14,9 +14,12 @@ class SoftmaxFocalLoss(Operation):
     The focal loss is given by
 
     .. math::
-        \frac{1}{N}\sum\limits_{1}^{N}-\alpha_i(1-p_i)^\gamma\log(p_i)
+        \frac{1}{N}\sum\limits_{1}^{N}-\alpha \hat{y}_i(1-p_i)^\gamma\log(p_i)
 
-    where :math:`N` is the number of elements in `x` and `y`.
+    where :math:`N` is the number of elements in `x` and `y` and :math:`\hat{y}_i` is
+    one where :math:`i` is the label of the element :math:`y_i` and 0 elsewhere. That is,
+    if the label :math:`y_k` is 1 and there are four possible label values, then
+    :math:`\hat{y}_k = (0, 1, 0, 0)`.
     '''
     scalar_only = True
 
