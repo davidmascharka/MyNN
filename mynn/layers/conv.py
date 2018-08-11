@@ -11,7 +11,7 @@ class conv:
     This class will perform an n-dimensional convolution on an (N, K, ...)-shape input Tensor
     with a (D, K, ...,)-shape weight Tensor, then add a (D,)-shape bias vector to the result.
     '''
-    def __init__(self, input_size, output_size, *filter_dims, stride=1, padding=0,
+    def __init__(self, input_size, output_size, *filter_dims, stride=1, padding=0, dilation=1,
                  weight_initializer=uniform, bias_initializer=constant, weight_kwargs=None,
                  bias_kwargs=None):
         ''' Initialize a conv layer.
@@ -27,11 +27,28 @@ class conv:
         filter_dims : Sequence[int]
             The dimensions of the convolutional filters.
 
-        stride : int, optional (default=1)
-            The stride at which to move across the input.
+        stride : Union[int, Tuple[int, ...]]
+            (keyword-only argument) The step-size with which each
+            filter is placed along the H and W axes during the
+            convolution. The tuple indicates (stride-0, ...). If a
+            single integer is provided, this stride is used for all
+            convolved dimensions
 
-        padding : int, optional (default=0)
-            The amount of zero-padding to add before performing the forward-pass.
+        padding : Union[int, Tuple[int, ...]], optional (default=0)
+            (keyword-only argument) The number of zeros to be padded
+            to both ends of each convolved dimension, respectively.
+            If a single integer is provided, this padding is used for
+            all of the convolved axes
+
+        dilation : Union[int, Tuple[int, ...]], optional (default=1)
+            (keyword-only argument) The spacing used when placing kernel
+            elements along the data. E.g. for a 1D convolution the ith
+            placement of the kernel multiplied  against the dilated-window:
+            `x[:, :, i*s:(i*s + w*d):d]`, where s is
+            the stride, w is the kernel-size, and d is the dilation factor.
+
+            If a single integer is provided, that dilation value is used for all
+            of the convolved axes.
 
         weight_initializer : Callable, optional (default=initializers.uniform)
             The function to use to initialize the weight tensor.
@@ -56,6 +73,7 @@ class conv:
         self.bias.data = self.bias.data.astype(self.weight.dtype)
         self.stride = stride
         self.padding = padding
+        self.dilation = dilation
 
     def __call__(self, x):
         ''' Perform the forward-pass of the n-dimensional convolutional layer over `x`.
@@ -70,7 +88,7 @@ class conv:
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
         '''
-        return conv_nd(x, self.weight, self.stride, self.padding) + self.bias
+        return conv_nd(x, self.weight, stride=self.stride, padding=self.padding, dilation=self.dilation) + self.bias
 
     @property
     def parameters(self):
