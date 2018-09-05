@@ -46,7 +46,7 @@ class batchnorm:
         if test:
             keepdims_shape = tuple(1 if n != 1 else d for n, d in enumerate(x.shape))
             
-            x -= self.moving_mean.reshape(keepdims_shape)
+            x = x - self.moving_mean.reshape(keepdims_shape)
             x /= np.sqrt(self.moving_variance.reshape(keepdims_shape) + 1e-08)
 
             return self.gamma * x + self.beta
