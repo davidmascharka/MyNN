@@ -1,7 +1,7 @@
 import numpy as np
 
 class SGD:
-    ''' Performs (batched) stochastic gradient descent.
+    """ Performs (batched) stochastic gradient descent.
 
     Parameters
     ----------
@@ -16,7 +16,7 @@ class SGD:
 
     weight_decay : Real, optional (default=0)
         The weight decay term.
-    '''
+    """
     def __init__(self, params, *, learning_rate=0.1, momentum=0, weight_decay=0):
         assert 0 <= momentum < 1, 'Momentum must lie within [0, 1)'
 
@@ -31,7 +31,7 @@ class SGD:
                 self.param_moments.append(np.zeros_like(param.data))
 
     def step(self):
-        ''' Perform one optimization step.
+        """ Perform one optimization step.
 
         This function should be called after accumulating gradients into the parameters of the model
         you wish to optimize via `backward()`. This will perform one step of (stochatic) gradient
@@ -43,7 +43,7 @@ class SGD:
         where θ is the parameter list of the model, η is the learning rate, μ is the weighting on 
         the momentum term, and ν is the moment of each parameter. Note that if the momentum term is
         0, this simplifies to θ = θ - η(dθ)
-        '''
+        """
         for idx, param in enumerate(self.params):
             if param.grad is None:
                 continue

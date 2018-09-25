@@ -6,15 +6,15 @@ from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
 
 class conv:
-    ''' A convolutional layer.
+    """ A convolutional layer.
 
     This class will perform an n-dimensional convolution on an (N, K, ...)-shape input Tensor
     with a (D, K, ...,)-shape weight Tensor, then add a (D,)-shape bias vector to the result.
-    '''
+    """
     def __init__(self, input_size, output_size, *filter_dims, stride=1, padding=0, dilation=1,
                  weight_initializer=uniform, bias_initializer=constant, weight_kwargs=None,
                  bias_kwargs=None, bias=True):
-        ''' Initialize a conv layer.
+        """ Initialize a conv layer.
 
         Parameters
         ----------
@@ -64,7 +64,7 @@ class conv:
 
         bias : bool, optional (default=True)
             If `False`, no biar parameter is initialized for the convolutional layer.
-        '''
+        """
         if np.ndim(filter_dims) > 1:      # if the user passes in a Sequence
             filter_dims = filter_dims[0]  # unpack it from the outer Tuple
 
@@ -81,7 +81,7 @@ class conv:
         self.dilation = dilation
 
     def __call__(self, x):
-        ''' Perform the forward-pass of the n-dimensional convolutional layer over `x`.
+        """ Perform the forward-pass of the n-dimensional convolutional layer over `x`.
 
         Parameters
         ----------
@@ -92,17 +92,17 @@ class conv:
         -------
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
-        '''
+        """
         return conv_nd(x, self.weight, stride=self.stride, padding=self.padding,
                        dilation=self.dilation) + self.bias
 
     @property
     def parameters(self):
-        ''' Access the parameters of the layer.
+        """ Access the parameters of the layer.
 
         Returns
         -------
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The weight and bias of this layer.
-        '''
+        """
         return (self.weight, self.bias)

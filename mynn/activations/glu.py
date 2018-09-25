@@ -1,7 +1,7 @@
 from .sigmoid import sigmoid
 
 def glu(x, dim=-1):
-    ''' Returns the Gated Linear Unit A * σ(B), where A and B are split from `x`.
+    """ Returns the Gated Linear Unit A * σ(B), where A and B are split from `x`.
 
     Parameters
     ----------
@@ -26,7 +26,7 @@ def glu(x, dim=-1):
     The GLU operation splits the input `x` in half along `dim`, storing the first half in A and the
     second in B. The return value is then A ⊙ σ(B), where ⊙ is elementwise multiplication and σ is
     the sigmoid function.
-    '''
+    """
     first_idx = list(slice(None) for _ in x.shape)
     second_idx = list(slice(None) for _ in x.shape)
     first_idx[dim] = slice(0, x.shape[dim]//2)

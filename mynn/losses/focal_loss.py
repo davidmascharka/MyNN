@@ -6,7 +6,7 @@ __all__ = ['softmax_focal_loss', 'focal_loss']
 
 
 class SoftmaxFocalLoss(Operation):
-    ''' Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
+    """ Returns the focal loss as described in https://arxiv.org/abs/1708.02002 which is
     given by -ɑ(1-p)ˠlog(p).
 
     Extended Description
@@ -20,11 +20,11 @@ class SoftmaxFocalLoss(Operation):
     one where :math:`i` is the label of the element :math:`y_i` and 0 elsewhere. That is,
     if the label :math:`y_k` is 1 and there are four possible label values, then
     :math:`\hat{y}_k = (0, 1, 0, 0)`.
-    '''
+    """
     scalar_only = True
 
     def __call__(self, scores, targets, alpha, gamma):
-        '''
+        """
         Parameters
         ----------
         scores : mygrad.Tensor, shape=(N, C)
@@ -43,7 +43,7 @@ class SoftmaxFocalLoss(Operation):
         -------
         numpy.ndarray
             The average focal loss.
-        '''
+        """
         if isinstance(targets, Tensor):
             targets = targets.data
 
@@ -72,7 +72,7 @@ class SoftmaxFocalLoss(Operation):
 
 
 def softmax_focal_loss(x, y, *, alpha=1, gamma=0):
-    '''
+    """
     Parameters
     ----------
     outputs : mygrad.Tensor, shape=(N, C)
@@ -91,12 +91,12 @@ def softmax_focal_loss(x, y, *, alpha=1, gamma=0):
     -------
     mygrad.Tensor
         The average focal loss.
-    '''
+    """
     return Tensor._op(SoftmaxFocalLoss, x, op_args=(y, alpha, gamma))
 
 
 def focal_loss(scores, targets, *, alpha=1, gamma=0):
-    ''' Return the focal loss.
+    """ Return the focal loss.
 
     Parameters
     ----------
@@ -121,7 +121,7 @@ def focal_loss(scores, targets, *, alpha=1, gamma=0):
     -----
     This function does not perform a softmax before computing the loss. If you ned to take the 
     softmax before computing the loss, see :class:`SoftmaxFocalLoss` instead.
-    '''
+    """
     if isinstance(targets, Tensor):
         targets = targets.data
         

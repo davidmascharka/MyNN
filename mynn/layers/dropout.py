@@ -2,7 +2,7 @@ import numpy as np
 
 
 class dropout:
-    ''' A dropout layer
+    """ A dropout layer
 
     This layer will randomly set elements of a tensor to 0, with some specified probability p.
 
@@ -26,7 +26,7 @@ class dropout:
 
     >>> dropout(x, prob_dropout=0.5)
     Tensor([2., 4., 0.])
-    '''
+    """
     def __init__(self, prob_dropout):
         """ Parameters
             ----------
@@ -39,7 +39,7 @@ class dropout:
         self.p_dropout = prob_dropout
 
     def __call__(self, x):
-        ''' Perform the dropout on `x`
+        """ Perform the dropout on `x`
 
         Parameters
         ----------
@@ -50,18 +50,18 @@ class dropout:
         -------
         Union[numpy.ndarray, mygrad.Tensor]
             `x` with dropout applied.
-        '''
+        """
         if not self.p_dropout:
             return x
         return x * np.random.binomial(1, (1 - self.p_dropout), x.shape) / (1 - self.p_dropout)
 
     @property
     def parameters(self):
-        ''' Access the parameters of the layer.
+        """ Access the parameters of the layer.
 
         Returns
         -------
         Tuple[]
             dropout is a parameterless layer
-        '''
+        """
         return tuple()

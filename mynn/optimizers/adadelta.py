@@ -1,7 +1,7 @@
 import numpy as np
 
 class Adadelta:
-    ''' Performs the Adadelta optimization procedure from Zeiler.
+    """ Performs the Adadelta optimization procedure from Zeiler.
 
     Parameters
     ----------
@@ -21,6 +21,6 @@ class Adadelta:
       "ADADELTA: An Adaptive Learning Rate Method"
       Matthew Zeiler
     https://arxiv.org/abs/1212.5701
-    '''
+    """
     def __init__(self, params, *, rho=0.95, eps=1e-06):
         raise NotImplementedError

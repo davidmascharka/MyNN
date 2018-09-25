@@ -6,7 +6,7 @@ from mygrad import Tensor
 __all__ = ['huber_loss']
 
 class HuberLoss(Operation):
-    ''' Returns the Huber loss (smooth L1).
+    """ Returns the Huber loss (smooth L1).
 
     Extended Description
     --------------------
@@ -16,11 +16,11 @@ class HuberLoss(Operation):
         L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l} 
             \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
             \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
-    '''
+    """
     scalar_only = True
 
     def __call__(self, outputs, targets, delta=1):
-        '''
+        """
         Parameters
         ----------
         outputs : mygrad.Tensor, shape=(N, any)
@@ -36,7 +36,7 @@ class HuberLoss(Operation):
         -------
         numpy.ndarray
             The average Huber loss.
-        '''
+        """
         assert delta > 0, "Delta must be > 0"
 
         if isinstance(targets, Tensor):
@@ -63,7 +63,7 @@ class HuberLoss(Operation):
 
 
 def huber_loss(x, y, *, delta=1):
-    ''' Returns the Huber loss (smooth L1).
+    """ Returns the Huber loss (smooth L1).
 
     Parameters
     ----------
@@ -90,5 +90,5 @@ def huber_loss(x, y, *, delta=1):
             \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
             \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
 
-    '''
+    """
     return Tensor._op(HuberLoss, x, op_args=(y, delta))

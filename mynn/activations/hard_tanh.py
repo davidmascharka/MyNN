@@ -3,7 +3,7 @@ from mygrad import maximum, minimum
 __all__ = ['hard_tanh']
 
 def hard_tanh(x, *, lower_bound=-1, upper_bound=1):
-    ''' Returns the hard hypterbolic tangent function.
+    """ Returns the hard hypterbolic tangent function.
 
     The hard_tanh function is `lower_bound` where `x` <= `lower_bound`, `upper_bound` where 
     `x` >= `upper_bound`, and `x` where `lower_bound` < `x` < `upper_bound`.
@@ -23,5 +23,5 @@ def hard_tanh(x, *, lower_bound=-1, upper_bound=1):
     -------
     mygrad.Tensor
         The result of applpying the hard tanh function elementwise to `x`.
-    '''
+    """
     return maximum(lower_bound, minimum(x, upper_bound))

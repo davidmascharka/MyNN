@@ -1,7 +1,7 @@
 import numpy as np
 
 class AdaMax:
-    ''' Performs the AdaMax variant of the Adam optimization procedure from Kingma and Ba.
+    """ Performs the AdaMax variant of the Adam optimization procedure from Kingma and Ba.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ class AdaMax:
       "Adam: A Method for Stochastic Optimization"
       Diederik P. Kingma and Jimmy Ba
     https://arxiv.org/abs/1412.6980
-    '''
+    """
     def __init__(self, params, *, learning_rate=0.002, beta1=0.9, beta2=0.999, eps=1e-08,
                  weight_decay=0):
         assert 0 <= beta1 < 1
@@ -48,12 +48,12 @@ class AdaMax:
         self.weight_decay = weight_decay
 
     def step(self):
-        ''' Perform one optimization step.
+        """ Perform one optimization step.
 
         This function should be called after accumulating gradients into the parameters of the model
         you wish to optimize via `backward()`. This will perform one step of the Adamax optimization
         algorithm put forward by Kingma and Ba.
-        '''
+        """
         self.t += 1
         for idx, param in enumerate(self.params):
             if param.grad is None:

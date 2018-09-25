@@ -3,7 +3,7 @@ from mygrad.nnet.activations import logsoftmax as mygrad_log_softmax
 __all__ = ['log_softmax']
 
 def log_softmax(x):
-    ''' Returns the log softmax of x along its trailing dimension:
+    """ Returns the log softmax of x along its trailing dimension:
 
         log(exp(x) / Σexp(x))
 
@@ -19,5 +19,5 @@ def log_softmax(x):
     -------
     mygrad.Tensor, shape=(N,) or shape=()
         The log-softmax of `x`.
-    '''
+    """
     return mygrad_log_softmax(x)
