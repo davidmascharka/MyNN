@@ -1,7 +1,7 @@
 import numpy as np
 
 class RMSprop:
-    ''' Performs the rmsprop optimization procedure from Hinton.
+    """ Performs the rmsprop optimization procedure from Hinton.
 
     Parameters
     ----------
@@ -23,6 +23,6 @@ class RMSprop:
       "Lecture 6e rmsprop: Divide the gradient by a running average of its recent magnitude
       Geoff Hinton with Nitish Srivastava and Kevin Swersky
     http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf
-    '''
+    """
     def __init__(self, params, *, learning_rate=0.01, alpha=0.9, eps=1e-08):
         raise NotImplementedError

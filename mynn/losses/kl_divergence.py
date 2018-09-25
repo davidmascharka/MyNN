@@ -1,7 +1,7 @@
 from mygrad import mean, log
 
 def kl_divergence(outputs, targets):
-    ''' Returns the Kullback-Leibler divergence loss from the outputs to the targets.
+    """ Returns the Kullback-Leibler divergence loss from the outputs to the targets.
     
     The KL-Divergence loss for a single sample is given by yᵢ⊙(log(yᵢ) - xᵢ)
 
@@ -17,5 +17,5 @@ def kl_divergence(outputs, targets):
     -------
     mygrad.Tensor, shape=()
         The mean Kullback-Leibler divergence.
-    '''
+    """
     return mean(targets * (log(targets) - outputs))

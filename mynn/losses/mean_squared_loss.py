@@ -1,7 +1,7 @@
 from mygrad import mean
 
 def mean_squared_loss(outputs, targets):
-    ''' Returns the mean squared error Σ(xᵢ - yᵢ)² over the data points. 
+    """ Returns the mean squared error Σ(xᵢ - yᵢ)² over the data points. 
 
     Parameters
     ----------
@@ -24,5 +24,5 @@ def mean_squared_loss(outputs, targets):
         \frac{1}{N}\sum\limits_{1}^{N}(x_i - y_i)^2
 
     where :math:`N` is the number of elements in `x` and `y`.
-    '''
+    """
     return mean((outputs - targets) ** 2)

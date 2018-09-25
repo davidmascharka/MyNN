@@ -2,7 +2,7 @@ import numpy as np
 from mygrad import Tensor
 
 def he_uniform(*shape, gain=1):
-    ''' Initialize a :class:`mygrad.Tensor` according to the uniform initialization procedure
+    """ Initialize a :class:`mygrad.Tensor` according to the uniform initialization procedure
     described by He et al.
 
     Parameters
@@ -32,7 +32,7 @@ def he_uniform(*shape, gain=1):
 
     where :math:`a` is the slope of the rectifier following this layer, which is incorporated
     using the `gain` variable above.
-    '''
+    """
     assert len(shape) >= 2, 'He Uniform initialization requires at least two dimensions!'
 
     tensor = np.empty(shape)

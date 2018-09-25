@@ -2,7 +2,7 @@ import numpy as np
 from mygrad import Tensor
 
 def normal(*shape, mean=0, std=1):
-    ''' Initialize a :class:`mygrad.Tensor` by drawing from a normal (Gaussian) distribution.
+    """ Initialize a :class:`mygrad.Tensor` by drawing from a normal (Gaussian) distribution.
 
     Parameters
     ----------
@@ -19,5 +19,5 @@ def normal(*shape, mean=0, std=1):
     -------
     mygrad.Tensor, shape=`shape`
         A Tensor, with values drawn from Ɲ(μ, σ²), where μ=`mean` and σ=`std`.
-    '''
+    """
     return Tensor(np.random.normal(mean, std, shape))

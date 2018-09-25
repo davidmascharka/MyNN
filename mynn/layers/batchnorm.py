@@ -4,13 +4,13 @@ import mygrad as mg
 from mygrad.nnet.layers.batchnorm import batchnorm as tensor_batchnorm
 
 class batchnorm:
-    ''' A batch normalization layer.
+    """ A batch normalization layer.
 
     This class will perform an n-dimensional batch normalization operation on an 
     (N, D, ...)-shaped tensor scaled by γ of shape (D, ...) and shifted by β of shape (D, ...).
-    '''
+    """
     def __init__(self, input_channels, momentum=0.1):
-        ''' Initialize a batch normalization layer.
+        """ Initialize a batch normalization layer.
 
         Parameters
         ----------
@@ -19,7 +19,7 @@ class batchnorm:
 
         momentum : float, optional (default=0.1)
             The momentum value used to maintain moving averages.
-        '''
+        """
         self.gamma = mg.ones((1, input_channels), dtype=np.float32)
         self.beta = mg.zeros((1, input_channels), dtype=np.float32)
 
@@ -31,7 +31,7 @@ class batchnorm:
         self.input_channels = input_channels
 
     def __call__(self, x, test=False):
-        ''' Perform the forward-pass of n-dimensional batch normalization over axis 1 on `x`.
+        """ Perform the forward-pass of n-dimensional batch normalization over axis 1 on `x`.
 
         Parameters
         ----------
@@ -42,7 +42,7 @@ class batchnorm:
             Determines whether the layer is being used at training time. The mean and variance
             will be computed for the batch during training, while averaged batch statistics will 
             be used at test time.
-        '''
+        """
         if test:
             keepdims_shape = tuple(1 if n != 1 else d for n, d in enumerate(x.shape))
             
@@ -65,12 +65,12 @@ class batchnorm:
 
     @property
     def parameters(self):
-        ''' Access the learnable parameters of the layer.
+        """ Access the learnable parameters of the layer.
 
         Returns
         -------
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The gamma and beta values of this layer.
-        '''
+        """
         return (self.gamma, self.beta)
     

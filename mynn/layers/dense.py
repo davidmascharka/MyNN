@@ -4,15 +4,15 @@ from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
 
 class dense:
-    ''' A fully-connected layer.
+    """ A fully-connected layer.
 
     This class will perform a dense (fully-connected) linear operation on an (N, D)-shape
     input tensor with a (D, M)-shape weight tensor and a (M,)-shape bias.
-    '''
+    """
     def __init__(self, input_size, output_size, *, weight_initializer=uniform,
                  bias_initializer=constant, weight_kwargs=None, bias_kwargs=None,
                  bias=True):
-        ''' Initialize a dense layer.
+        """ Initialize a dense layer.
 
         Parameters
         ----------
@@ -36,7 +36,7 @@ class dense:
 
         bias : bool, optional (default=True)
             If `False` no bias parameter is initialized for the dense layer.
-        '''
+        """
         weight_kwargs = weight_kwargs if weight_kwargs is not None else {}
         bias_kwargs = bias_kwargs if bias_kwargs is not None else {}
 
@@ -48,7 +48,7 @@ class dense:
             self.bias = None
 
     def __call__(self, x):
-        ''' Perform the forward-pass of the densely-connected layer over `x`.
+        """ Perform the forward-pass of the densely-connected layer over `x`.
 
         Parameters
         ----------
@@ -59,7 +59,7 @@ class dense:
         -------
         mygrad.Tensor
             The result of applying the dense layer wx + b.
-        '''
+        """
         if self.bias is not None:
             return matmul(x, self.weight) + self.bias
         else:
@@ -67,11 +67,11 @@ class dense:
 
     @property
     def parameters(self):
-        ''' Access the parameters of the layer.
+        """ Access the parameters of the layer.
 
         Returns
         -------
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The weight and bias of this layer.
-        '''
+        """
         return (self.weight, self.bias) if self.bias is not None else (self.weight, )

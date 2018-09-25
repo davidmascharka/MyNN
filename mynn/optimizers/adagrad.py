@@ -1,7 +1,7 @@
 import numpy as np
 
 class AdaGrad:
-    ''' Performs the AdaGrad optimization procedure from Duchi, Hazan, and Singer.
+    """ Performs the AdaGrad optimization procedure from Duchi, Hazan, and Singer.
 
     Parameters
     ----------
@@ -17,6 +17,6 @@ class AdaGrad:
       "Adaptive Subgradient Methods for Online Learning and Stochastic Optimization"
       John Duchi, Elad Hazan, and Yoram Singer
     http://jmlr.org/papers/volume12/duchi11a/duchi11a.pdf
-    '''
+    """
     def __init__(self, params, *, learning_rate=0.01):
         raise NotImplementedError

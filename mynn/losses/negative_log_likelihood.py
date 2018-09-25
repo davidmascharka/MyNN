@@ -2,7 +2,7 @@ from mygrad import Tensor, sum
 import numpy as np
 
 def negative_log_likelihood(outputs, targets, *, weights=None):
-    ''' Returns the (weighted) negative log-likelihood loss between outputs and targets.
+    """ Returns the (weighted) negative log-likelihood loss between outputs and targets.
     
     Note that this does not compute a softmax, so you should input log-probabilities to this.
     See ``softmax_cross_entropy`` if you need your loss to compute a softmax.
@@ -22,7 +22,7 @@ def negative_log_likelihood(outputs, targets, *, weights=None):
     -------
     mygrad.Tensor, shape=()
         The average (weighted) negative log-likelihood.
-    '''
+    """
     if isinstance(targets, Tensor):
         targets = targets.data
 

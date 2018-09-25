@@ -2,7 +2,7 @@ import numpy as np
 from mygrad import Tensor
 
 def glorot_normal(*shape, gain=1):
-    ''' Initialize a :class:`mygrad.Tensor` according to the normal initialization procedure
+    """ Initialize a :class:`mygrad.Tensor` according to the normal initialization procedure
     described by Glorot and Bengio.
 
     Parameters
@@ -28,7 +28,7 @@ def glorot_normal(*shape, gain=1):
 
     .. math::
         \mathcal{N}(0, \frac{\sqrt{2}}{\sqrt{n_j+n_{j+1}}})
-    '''
+    """
     assert len(shape) >= 2, 'Glorot Normal initialization requires at least two dimensions!'
 
     tensor = np.empty(shape)

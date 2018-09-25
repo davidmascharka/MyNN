@@ -3,12 +3,12 @@ from mygrad import Tensor
 from mynn.activations.leaky_relu import leaky_relu
 
 class prelu:
-    ''' A parametric rectified linear unit.
+    """ A parametric rectified linear unit.
 
     This class maintains the learned slope parameter of a PReLU unit, which is a leaky ReLU with
     learned slope in the negative region.
 
-    '''
+    """
     def __init__(self, slope=0.1):
         """ Parameters
             ----------
@@ -17,7 +17,7 @@ class prelu:
         self.slope = Tensor(slope)
 
     def __call__(self, x):
-        ''' Forward the input through the PReLU.
+        """ Forward the input through the PReLU.
 
         Parameters
         ----------
@@ -28,16 +28,16 @@ class prelu:
         -------
         mygrad.Tensor
             The result of applying the PReLU elementwise across `x`.
-        '''
+        """
         return leaky_relu(x, self.slope)
 
     @property
     def parameters(self):
-        ''' Access the parameters of the layer.
+        """ Access the parameters of the layer.
 
         Returns
         -------
         Tuple[mygrad.Tensor]
             The slope of the PReLU unit.
-        '''
+        """
         return (self.slope,)

@@ -6,7 +6,7 @@ from mygrad.operation_base import Operation
 __all__ = ['selu']
 
 class SELU(Operation):
-    ''' Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
+    """ Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
     given by  λɑ(exp(x) - 1) for x < 0 and λx for x ≥ 0.
 
     Notes
@@ -15,9 +15,9 @@ class SELU(Operation):
         Self-Normalizing Neural Networks
         Günter Klambauer, Thomas Unterthiner, Andreas Mayr, Sepp Hochreiter
     at https://arxiv.org/abs/1706.02515
-    '''
+    """
     def __call__(self, x):
-        '''
+        """
         Parameters
         ----------
         x : mygrad.Tensor
@@ -27,7 +27,7 @@ class SELU(Operation):
         -------
         numpy.ndarray
             The SELU function applied to `x` elementwise.
-        '''
+        """
         self.variables = (x,)
 
         x = x.data
@@ -41,7 +41,7 @@ class SELU(Operation):
         x.backward(grad * self.scale * np.where(x.data < 0, self.exp + self.alpha, 1), **kwargs)
 
 def selu(x):
-    ''' Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
+    """ Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
     given by  λɑ(exp(x) - 1) for x < 0 and λx for x ≥ 0.
 
     Parameters
@@ -60,5 +60,5 @@ def selu(x):
         Self-Normalizing Neural Networks
         Günter Klambauer, Thomas Unterthiner, Andreas Mayr, Sepp Hochreiter
     at https://arxiv.org/abs/1706.02515
-    '''
+    """
     return Tensor._op(SELU, x)

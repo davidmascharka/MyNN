@@ -2,7 +2,7 @@ import numpy as np
 from mygrad import Tensor
 
 def constant(*shape, value=0):
-    ''' Initialize a :class:`mygrad.Tensor` of shape `shape` with a constant value.
+    """ Initialize a :class:`mygrad.Tensor` of shape `shape` with a constant value.
 
     Parameters
     ----------
@@ -16,5 +16,5 @@ def constant(*shape, value=0):
     -------
     mygrad.Tensor, shape=`shape`
         A Tensor, whose values are `value`.
-    '''
+    """
     return Tensor(np.full(shape, value))

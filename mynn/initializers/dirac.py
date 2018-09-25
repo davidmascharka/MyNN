@@ -2,7 +2,7 @@ import numpy as np
 from mygrad import Tensor
 
 def dirac(*shape):
-    ''' Initialize a :class:`mygrad.Tensor` according to the Dirac initialization procedure
+    """ Initialize a :class:`mygrad.Tensor` according to the Dirac initialization procedure
     described by Zagoruyko and Komodakis.
 
     Parameters
@@ -27,7 +27,7 @@ def dirac(*shape):
     for compatible tensors x, where ⋆ indicates convolution. Note that this does not
     guarantee that the convolution will produce x, but it will preserve as many channels of
     the input as possible.
-    '''
+    """
     assert len(shape) >= 2, 'Dirac initialization requires at least two dimensions!'
 
     tensor = np.zeros(shape)
