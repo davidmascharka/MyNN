@@ -37,11 +37,12 @@ class dense:
         bias : bool, optional (default=True)
             If `False` no bias parameter is initialized for the dense layer.
         '''
-        self.weight = weight_initializer(input_size, output_size,
-                                         **(weight_kwargs if weight_kwargs is not None else {}))
+        weight_kwargs = weight_kwargs if weight_kwargs is not None else {}
+        bias_kwargs = bias_kwargs if bias_kwargs is not None else {}
+
+        self.weight = weight_initializer(input_size, output_size, **weight_kwargs)
         if bias:
-            self.bias = bias_initializer(1, output_size,
-                                         **(bias_kwargs if bias_kwargs is not None else {}))
+            self.bias = bias_initializer(1, output_size, **bias_kwargs)
             self.bias.data = self.bias.data.astype(self.weight.dtype)
         else:
             self.bias = None

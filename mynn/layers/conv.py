@@ -13,7 +13,7 @@ class conv:
     '''
     def __init__(self, input_size, output_size, *filter_dims, stride=1, padding=0, dilation=1,
                  weight_initializer=uniform, bias_initializer=constant, weight_kwargs=None,
-                 bias_kwargs=None):
+                 bias_kwargs=None, bias=True):
         ''' Initialize a conv layer.
 
         Parameters
@@ -61,6 +61,9 @@ class conv:
 
         bias_kwargs : Optional[dictionary]
             The keyword arguments to pass to the bias initialization function.
+
+        bias : bool, optional (default=True)
+            If `False`, no biar parameter is initialized for the convolutional layer.
         '''
         if np.ndim(filter_dims) > 1:      # if the user passes in a Sequence
             filter_dims = filter_dims[0]  # unpack it from the outer Tuple
@@ -69,8 +72,10 @@ class conv:
         bias_kwargs = bias_kwargs if bias_kwargs is not None else {}
 
         self.weight = weight_initializer(output_size, input_size, *filter_dims, **weight_kwargs)
-        self.bias = bias_initializer(output_size, **bias_kwargs).reshape(1, -1, *(1 for _ in range(len(filter_dims))))
-        self.bias.data = self.bias.data.astype(self.weight.dtype)
+        if bias:
+            self.bias = bias_initializer(output_size, **bias_kwargs)
+            self.bias = self.bias.reshape(1, -1, *(1 for _ in range(len(filter_dims))))
+            self.bias.data = self.bias.data.astype(self.weight.dtype)
         self.stride = stride
         self.padding = padding
         self.dilation = dilation
@@ -88,7 +93,8 @@ class conv:
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
         '''
-        return conv_nd(x, self.weight, stride=self.stride, padding=self.padding, dilation=self.dilation) + self.bias
+        return conv_nd(x, self.weight, stride=self.stride, padding=self.padding,
+                       dilation=self.dilation) + self.bias
 
     @property
     def parameters(self):
