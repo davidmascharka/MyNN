@@ -94,8 +94,9 @@ class conv:
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
         """
-        return conv_nd(x, self.weight, stride=self.stride, padding=self.padding,
-                       dilation=self.dilation) + self.bias
+        out =  conv_nd(x, self.weight, stride=self.stride, padding=self.padding,
+                       dilation=self.dilation)
+        return out + self.bias if self.bias is not None else out
 
     @property
     def parameters(self):
