@@ -41,11 +41,10 @@ class dense:
         bias_kwargs = bias_kwargs if bias_kwargs is not None else {}
 
         self.weight = weight_initializer(input_size, output_size, **weight_kwargs)
+        self.bias = None
         if bias:
             self.bias = bias_initializer(1, output_size, **bias_kwargs)
             self.bias.data = self.bias.data.astype(self.weight.dtype)
-        else:
-            self.bias = None
 
     def __call__(self, x):
         """ Perform the forward-pass of the densely-connected layer over `x`.
@@ -60,10 +59,8 @@ class dense:
         mygrad.Tensor
             The result of applying the dense layer wx + b.
         """
-        if self.bias is not None:
-            return matmul(x, self.weight) + self.bias
-        else:
-            return matmul(x, self.weight)
+        out = matmul(x, self.weight)
+        return out + self.bias if self.bias is None else out
 
     @property
     def parameters(self):
