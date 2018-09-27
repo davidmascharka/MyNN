@@ -23,4 +23,29 @@ class Adadelta:
     https://arxiv.org/abs/1212.5701
     """
     def __init__(self, params, *, rho=0.95, eps=1e-06):
-        raise NotImplementedError
+        self.params = params
+        self.rho = rho
+        self.eps = eps
+
+        self.g = []
+        self.dx = []
+        for param in params:
+            self.g.append(np.zeros_like(param.data))
+            self.dx.append(np.zeros_like(param.data))
+
+    def step(self):
+        """ Perform one optimization step.
+
+        This function should be called after accumulating gradients into the parameters of the model
+        you wish to optimize via `backward()`. This will perform one step of the Adam optimization
+        algorithm put forward by Kingma and Ba.
+        """
+        for idx, param in enumerate(self.params):
+            grad = param.grad
+            if grad is None:
+                continue
+
+            self.g[idx] = self.rho * self.g[idx] + (1 - self.rho) * grad**2                 # step 4
+            dx = -np.sqrt(self.dx[idx] + self.eps) / np.sqrt(self.g[idx] + self.eps) * grad # step 5
+            self.dx[idx] = self.rho * self.dx[idx] + (1 - self.rho) * dx**2                 # step 6
+            param.data += -dx                                                               # step 7
