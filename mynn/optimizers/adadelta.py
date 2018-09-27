@@ -48,4 +48,4 @@ class Adadelta:
             self.g[idx] = self.rho * self.g[idx] + (1 - self.rho) * grad**2                 # step 4
             dx = -np.sqrt(self.dx[idx] + self.eps) / np.sqrt(self.g[idx] + self.eps) * grad # step 5
             self.dx[idx] = self.rho * self.dx[idx] + (1 - self.rho) * dx**2                 # step 6
-            param.data += -dx                                                               # step 7
+            param.data += dx                                                                # step 7
