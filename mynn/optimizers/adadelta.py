@@ -37,8 +37,8 @@ class Adadelta:
         """ Perform one optimization step.
 
         This function should be called after accumulating gradients into the parameters of the model
-        you wish to optimize via `backward()`. This will perform one step of the Adam optimization
-        algorithm put forward by Kingma and Ba.
+        you wish to optimize via `backward()`. This will perform one step of the adadelta
+        optimization algorithm put forward by Zeiler.
         """
         for idx, param in enumerate(self.params):
             grad = param.grad
