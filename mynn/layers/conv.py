@@ -105,4 +105,4 @@ class conv:
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The weight and bias of this layer.
         """
-        return (self.weight, self.bias)
+        return (self.weight, self.bias) if self.bias is not None else (self.weight, )
