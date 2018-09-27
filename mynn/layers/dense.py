@@ -60,7 +60,7 @@ class dense:
             The result of applying the dense layer wx + b.
         """
         out = matmul(x, self.weight)
-        return out + self.bias if self.bias is None else out
+        return out + self.bias if self.bias is not None else out
 
     @property
     def parameters(self):
