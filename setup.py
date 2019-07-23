@@ -26,6 +26,7 @@ TESTS_REQUIRE = ['pytest >= 3.8', 'hypothesis >= 4.6']
 LONG_DESCRIPTION = """
 MyNN is a simple NumPy-centric neural network library that builds on top of MyGrad. It provides
 convenient wrappers for such functionality as
+
 - Convenient neural network layers (e.g. convolutional, dense, batch normalization, dropout)
 - Weight initialization functions (e.g. Glorot, He, uniform, normal)
 - Neural network activation functions (e.g. elu, glu, tanh, sigmoid)
@@ -37,18 +38,19 @@ It was written as an extension to MyGrad for rapid prototyping of neural network
 a clean codebase with excellent documentation, and as a learning tool.
 """
 
-setup(
-    name=DISTNAME,
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
-    license=LICENSE,
-    author=AUTHOR,
-    classifiers=CLASSIFIERS,
-    description=DESCRIPTION,
-    long_description=LONG_DESCRIPTION,
-    url=URL,
-    python_requires=">=3.6",
-    packages=find_packages(),
-    install_requires=INSTALL_REQUIRES,
-    tests_require=TESTS_REQUIRE,
-)
+if __name__ == '__main__':
+    setup(
+        name=DISTNAME,
+        version=versioneer.get_version(),
+        cmdclass=versioneer.get_cmdclass(),
+        license=LICENSE,
+        author=AUTHOR,
+        classifiers=CLASSIFIERS,
+        description=DESCRIPTION,
+        long_description=LONG_DESCRIPTION,
+        url=URL,
+        python_requires=">=3.6",
+        packages=find_packages(),
+        install_requires=INSTALL_REQUIRES,
+        tests_require=TESTS_REQUIRE,
+    )
