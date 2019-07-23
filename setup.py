@@ -48,6 +48,7 @@ if __name__ == '__main__':
         classifiers=CLASSIFIERS,
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
+        long_description_ocntent_type="text/markdown",
         url=URL,
         python_requires=">=3.6",
         packages=find_packages(),
