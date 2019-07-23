@@ -1,0 +1,2 @@
+include versioneer.py
+include mynn/_version.py
