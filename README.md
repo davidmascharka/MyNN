@@ -1,4 +1,4 @@
-# MyNN (needs a new name)
+# MyNN
 A pure-Python neural network library based on the amazing
 [MyGrad](https://github.com/rsokl/MyGrad).
 
