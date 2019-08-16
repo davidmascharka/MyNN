@@ -2,6 +2,7 @@ from mynn.activations.log_softmax import log_softmax
 from mynn.losses.negative_log_likelihood import negative_log_likelihood
 from mygrad.nnet.losses import softmax_crossentropy as mygrad_softmax_cross_entropy
 
+
 def softmax_cross_entropy(x, y, *, weights=None):
     """
     Parameters
@@ -22,6 +23,4 @@ def softmax_cross_entropy(x, y, *, weights=None):
     """
     if weights is not None:
         return negative_log_likelihood(log_softmax(x), y, weights=weights)
-    else:
-        return mygrad_softmax_cross_entropy(x, y)
-
+    return mygrad_softmax_cross_entropy(x, y)

@@ -1,6 +1,7 @@
 from mygrad.nnet.activations import sigmoid as mygrad_sigmoid
 
-__all__ = ['sigmoid']
+__all__ = ["sigmoid"]
+
 
 def sigmoid(x):
     """ Returns the sigmoid function of the input elementwise.

@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
+
 def uniform(*shape, lower_bound=0, upper_bound=1):
     """ Initialize a :class:`mygrad.Tensor` by drawing from a uniform distribution.
 

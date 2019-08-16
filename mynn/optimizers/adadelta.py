@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Adadelta:
     """ Performs the Adadelta optimization procedure from Zeiler.
 
@@ -22,6 +23,7 @@ class Adadelta:
       Matthew Zeiler
     https://arxiv.org/abs/1212.5701
     """
+
     def __init__(self, params, *, rho=0.95, eps=1e-06):
         self.params = params
         self.rho = rho
@@ -45,7 +47,10 @@ class Adadelta:
             if grad is None:
                 continue
 
-            self.g[idx] = self.rho * self.g[idx] + (1 - self.rho) * grad**2                 # step 4
-            dx = -np.sqrt(self.dx[idx] + self.eps) / np.sqrt(self.g[idx] + self.eps) * grad # step 5
-            self.dx[idx] = self.rho * self.dx[idx] + (1 - self.rho) * dx**2                 # step 6
-            param.data += dx                                                                # step 7
+            self.g[idx] = self.rho * self.g[idx] + (1 - self.rho) * grad ** 2  # step 4
+            sqrt_dx = np.sqrt(self.dx[idx] + self.eps)
+            sqrt_g = np.sqrt(self.g[idx] + self.eps)
+                              
+            dx = -sqrt_dx / sqrt_g * grad                                      # step 5
+            self.dx[idx] = self.rho * self.dx[idx] + (1 - self.rho) * dx ** 2  # step 6
+            param.data += dx                                                   # step 7

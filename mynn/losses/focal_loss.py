@@ -2,7 +2,7 @@ from mygrad.operation_base import Operation
 from mygrad import Tensor, mean, log
 import numpy as np
 
-__all__ = ['softmax_focal_loss', 'focal_loss']
+__all__ = ["softmax_focal_loss", "focal_loss"]
 
 
 class SoftmaxFocalLoss(Operation):
@@ -21,6 +21,7 @@ class SoftmaxFocalLoss(Operation):
     if the label :math:`y_k` is 1 and there are four possible label values, then
     :math:`\hat{y}_k = (0, 1, 0, 0)`.
     """
+
     scalar_only = True
 
     def __call__(self, scores, targets, alpha, gamma):
@@ -59,14 +60,15 @@ class SoftmaxFocalLoss(Operation):
         one_m_pc = 1 - pc + 1e-14  # correct domain for when gamma < 1 and pc == 1
         log_pc = np.log(pc)
 
-        loss = -np.mean(alpha * one_m_pc **gamma * log_pc)
+        loss = -np.mean(alpha * one_m_pc ** gamma * log_pc)
 
         self.back = scores
         self.back[label_locs] -= 1
-        self.back *= (one_m_pc**gamma - pc * gamma * one_m_pc**(gamma - 1) * log_pc)[:, np.newaxis]
-        self.back *= (alpha / scores.shape[0])
+        deriv = one_m_pc**gamma - pc * gamma * one_m_pc**(gamma - 1) * log_pc
+        self.back *= deriv[:, np.newaxis]
+        self.back *= alpha / scores.shape[0]
         return loss
-    
+
     def backward_var(self, grad, index, **kwargs):
         self.variables[index].backward(grad * self.back, **kwargs)
 
@@ -124,7 +126,7 @@ def focal_loss(scores, targets, *, alpha=1, gamma=0):
     """
     if isinstance(targets, Tensor):
         targets = targets.data
-        
+
     label_locs = (range(len(targets)), targets)
     pc = scores[label_locs]
-    return -mean(alpha * (1 - pc + 1e-14)**gamma * log(pc))
+    return -mean(alpha * (1 - pc + 1e-14) ** gamma * log(pc))

@@ -1,6 +1,7 @@
 from mygrad import maximum, minimum
 
-__all__ = ['hard_tanh']
+__all__ = ["hard_tanh"]
+
 
 def hard_tanh(x, *, lower_bound=-1, upper_bound=1):
     """ Returns the hard hyperbolic tangent function.

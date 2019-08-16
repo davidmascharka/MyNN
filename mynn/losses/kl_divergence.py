@@ -1,5 +1,6 @@
 from mygrad import mean, log
 
+
 def kl_divergence(outputs, targets):
     """ Returns the Kullback-Leibler divergence loss from the outputs to the targets.
     

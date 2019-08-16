@@ -2,6 +2,7 @@ from mygrad import Tensor
 
 from mynn.activations.leaky_relu import leaky_relu
 
+
 class prelu:
     """ A parametric rectified linear unit.
 
@@ -9,6 +10,7 @@ class prelu:
     learned slope in the negative region.
 
     """
+
     def __init__(self, slope=0.1):
         """ Parameters
             ----------

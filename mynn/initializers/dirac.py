@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
+
 def dirac(*shape):
     """ Initialize a :class:`mygrad.Tensor` according to the Dirac initialization procedure
     described by Zagoruyko and Komodakis.
@@ -28,12 +29,15 @@ def dirac(*shape):
     guarantee that the convolution will produce x, but it will preserve as many channels of
     the input as possible.
     """
-    assert len(shape) >= 2, 'Dirac initialization requires at least two dimensions!'
+    if len(shape) < 2:
+        raise ValueError("Dirac initialization requires at least two dimensions")
 
     tensor = np.zeros(shape)
-    minimum_depth = np.minimum(shape[0], shape[1]) # out and in dimensions, respectively
+    minimum_depth = np.minimum(
+        shape[0], shape[1]
+    )  # out and in dimensions, respectively
     depths = range(minimum_depth)
-    trailing_indices = ([i//2]*len(depths) for i in tensor.shape[2:])
+    trailing_indices = ([i // 2] * len(depths) for i in tensor.shape[2:])
     # tensor[i, i, k1//2, k2//2, ..., kn//2] for each i in min(shape[0], shape[1]
     # where the k values are the spatial dimensions of `tensor`
     tensor[(depths, depths, *trailing_indices)] = 1

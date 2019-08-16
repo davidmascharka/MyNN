@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
+
 def constant(*shape, value=0):
     """ Initialize a :class:`mygrad.Tensor` of shape `shape` with a constant value.
 

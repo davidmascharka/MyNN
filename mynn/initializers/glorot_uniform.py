@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
+
 def glorot_uniform(*shape, gain=1):
     """ Initialize a :class:`mygrad.Tensor` according to the uniform initialization procedure
     described by Glorot and Bengio.
@@ -29,7 +30,8 @@ def glorot_uniform(*shape, gain=1):
     .. math::
         U[-\frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}, \frac{\sqrt{6}}{\sqrt{n_j+n_{j+1}}}]
     """
-    assert len(shape) >= 2, 'Glorot Uniform initialization requires at least two dimensions!'
+    if len(shape) < 2:
+        raise ValueError("Glorot Uniform initialization requires at least two dimensions"
 
     tensor = np.empty(shape)
     bound = gain * np.sqrt(6 / ((shape[0] + shape[1]) * tensor[0, 0].size))

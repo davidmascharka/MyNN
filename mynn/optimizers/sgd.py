@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class SGD:
     """ Performs (batched) stochastic gradient descent.
 
@@ -17,8 +18,10 @@ class SGD:
     weight_decay : Real, optional (default=0)
         The weight decay term.
     """
+
     def __init__(self, params, *, learning_rate=0.1, momentum=0, weight_decay=0):
-        assert 0 <= momentum < 1, 'Momentum must lie within [0, 1)'
+        if momentum < 0 or momentum > 1:
+            raise ValueError("Momentum must lie within [0, 1)")
 
         self.params = params
         self.learning_rate = learning_rate
@@ -40,7 +43,7 @@ class SGD:
           ν = μν - η(dθ)
           θ = θ + ν
 
-        where θ is the parameter list of the model, η is the learning rate, μ is the weighting on 
+        where θ is the parameter list of the model, η is the learning rate, μ is the weighting on
         the momentum term, and ν is the moment of each parameter. Note that if the momentum term is
         0, this simplifies to θ = θ - η(dθ)
         """
@@ -48,8 +51,9 @@ class SGD:
             if param.grad is None:
                 continue
 
-            update = -self.weight_decay * param.data if param.ndim > 1 else 0  # no decay on bias
-            
+            # no decay on bias
+            update = -self.weight_decay * param.data if param.ndim > 1 else 0
+
             # perform the momentum update
             if self.momentum != 0:
                 moment = self.param_moments[idx]

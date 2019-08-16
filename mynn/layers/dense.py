@@ -3,15 +3,25 @@ from mygrad import matmul
 from mynn.initializers.uniform import uniform
 from mynn.initializers.constant import constant
 
+
 class dense:
     """ A fully-connected layer.
 
     This class will perform a dense (fully-connected) linear operation on an (N, D)-shape
     input tensor with a (D, M)-shape weight tensor and a (M,)-shape bias.
     """
-    def __init__(self, input_size, output_size, *, weight_initializer=uniform,
-                 bias_initializer=constant, weight_kwargs=None, bias_kwargs=None,
-                 bias=True):
+
+    def __init__(
+            self,
+            input_size,
+            output_size,
+            *,
+            weight_initializer=uniform,
+            bias_initializer=constant,
+            weight_kwargs=None,
+            bias_kwargs=None,
+            bias=True,
+    ):
         """ Initialize a dense layer.
 
         Parameters
@@ -71,4 +81,4 @@ class dense:
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The weight and bias of this layer.
         """
-        return (self.weight, self.bias) if self.bias is not None else (self.weight, )
+        return (self.weight, self.bias) if self.bias is not None else (self.weight,)
