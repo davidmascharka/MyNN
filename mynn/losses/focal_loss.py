@@ -70,7 +70,7 @@ class SoftmaxFocalLoss(Operation):
         return loss
 
     def backward_var(self, grad, index, **kwargs):
-        self.variables[index].backward(grad * self.back, **kwargs)
+        return grad * self.back
 
 
 def softmax_focal_loss(x, y, *, alpha=1, gamma=0):

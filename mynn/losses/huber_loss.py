@@ -62,7 +62,7 @@ class HuberLoss(Operation):
         return np.mean(loss)
 
     def backward_var(self, grad, index, **kwargs):
-        self.variables[index].backward(grad * self.back, **kwargs)
+        return grad * self.back
 
 
 def huber_loss(x, y, *, delta=1):
