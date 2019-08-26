@@ -1,5 +1,6 @@
 from mygrad import mean, abs
 
+
 def l1_loss(outputs, targets):
     """ Returns the L¹ loss Σ|xᵢ - yᵢ| averaged over the number of data points. 
 

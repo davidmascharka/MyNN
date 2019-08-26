@@ -3,7 +3,8 @@ import numpy as np
 from mygrad.operation_base import Operation
 from mygrad import Tensor
 
-__all__ = ['huber_loss']
+__all__ = ["huber_loss"]
+
 
 class HuberLoss(Operation):
     """ Returns the Huber loss (smooth L1).
@@ -17,6 +18,7 @@ class HuberLoss(Operation):
             \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
             \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
     """
+
     scalar_only = True
 
     def __call__(self, outputs, targets, delta=1):
@@ -37,7 +39,8 @@ class HuberLoss(Operation):
         numpy.ndarray
             The average Huber loss.
         """
-        assert delta > 0, "Delta must be > 0"
+        if delta <= 0:
+            raise ValueError("Delta must be > 0")
 
         if isinstance(targets, Tensor):
             targets = targets.data
@@ -50,11 +53,11 @@ class HuberLoss(Operation):
         np.abs(diff, out=diff)
 
         loss = diff.copy()
-        np.multiply(loss, diff/2, where=(diff < 1), out=loss)
+        np.multiply(loss, diff / 2, where=(diff < 1), out=loss)
         loss[diff >= 1] -= 0.5 * delta
         loss[diff >= 1] *= delta
 
-        self.back = np.where(diff < 1, outs - targets, delta*sign) / outs.size
+        self.back = np.where(diff < 1, outs - targets, delta * sign) / outs.size
 
         return np.mean(loss)
 

@@ -3,7 +3,8 @@ import numpy as np
 from mygrad import Tensor
 from mygrad.operation_base import Operation
 
-__all__ = ['selu']
+__all__ = ["selu"]
+
 
 class SELU(Operation):
     """ Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is
@@ -16,6 +17,7 @@ class SELU(Operation):
         Günter Klambauer, Thomas Unterthiner, Andreas Mayr, Sepp Hochreiter
     at https://arxiv.org/abs/1706.02515
     """
+
     def __call__(self, x):
         """
         Parameters
@@ -38,7 +40,10 @@ class SELU(Operation):
 
     def backward_var(self, grad, index, **kwargs):
         x = self.variables[index]
-        x.backward(grad * self.scale * np.where(x.data < 0, self.exp + self.alpha, 1), **kwargs)
+        x.backward(
+            grad * self.scale * np.where(x.data < 0, self.exp + self.alpha, 1), **kwargs
+        )
+
 
 def selu(x):
     """ Returns the scaled exponential linear activation (SELU) elementwise along x. The SELU is

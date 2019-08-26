@@ -2,12 +2,14 @@ import numpy as np
 from mygrad import Tensor
 from mygrad.operation_base import Operation
 
-__all__ = ['elu']
+__all__ = ["elu"]
+
 
 class ELU(Operation):
     """ Returns the exponential linear activation (ELU) elementwise along x. The ELU is given by 
     ɑ(exp(x) - 1) for x < 0 and x for x ≥ 0.
     """
+
     def __call__(self, x, alpha):
         """
         Parameters
@@ -33,6 +35,7 @@ class ELU(Operation):
     def backward_var(self, grad, index, **kwargs):
         x = self.variables[index]
         x.backward(grad * np.where(x.data < 0, self.exp + self.alpha, 1), **kwargs)
+
 
 def elu(x, alpha):
     """ Returns the exponential linear activation (ELU) elementwise along x. The ELU is given by 

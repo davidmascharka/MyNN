@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Adam:
     """ Performs the Adaptive Moment Estimation optimization procedure from Kingma and Ba.
 
@@ -30,8 +31,17 @@ class Adam:
       Diederik P. Kingma and Jimmy Ba
     https://arxiv.org/abs/1412.6980
     """
-    def __init__(self, params, *, learning_rate=0.001, beta1=0.9, beta2=0.999, eps=1e-08,
-                 weight_decay=0):
+
+    def __init__(
+            self,
+            params,
+            *,
+            learning_rate=0.001,
+            beta1=0.9,
+            beta2=0.999,
+            eps=1e-08,
+            weight_decay=0,
+    ):
         assert 0 <= beta1 < 1
         assert 0 <= beta2 < 1
         self.params = params
@@ -40,13 +50,13 @@ class Adam:
         self.beta2 = beta2
         self.eps = eps
         self.t = 0  # timestep
-        self.m = [] # first moment estimate
-        self.v = [] # second moment estimate
+        self.m = []  # first moment estimate
+        self.v = []  # second moment estimate
         for param in params:
             self.m.append(np.zeros_like(param.data))
             self.v.append(np.zeros_like(param.data))
         self.weight_decay = weight_decay
-        
+
     def step(self):
         """ Perform one optimization step.
 
@@ -59,11 +69,11 @@ class Adam:
             if param.grad is None:
                 continue
 
-            self.m[idx] = self.beta1*self.m[idx] + (1 - self.beta1)*param.grad
-            self.v[idx] = self.beta2*self.v[idx] + (1 - self.beta2)*param.grad**2
+            self.m[idx] = self.beta1 * self.m[idx] + (1 - self.beta1) * param.grad
+            self.v[idx] = self.beta2 * self.v[idx] + (1 - self.beta2) * param.grad ** 2
 
-            m_hat = self.m[idx] / (1 - self.beta1**self.t)
-            v_hat = self.v[idx] / (1 - self.beta2**self.t)
+            m_hat = self.m[idx] / (1 - self.beta1 ** self.t)
+            v_hat = self.v[idx] / (1 - self.beta2 ** self.t)
 
             update = -self.weight_decay * param.data if param.ndim > 1 else 0
             update += -self.learning_rate * m_hat / (np.sqrt(v_hat) + self.eps)

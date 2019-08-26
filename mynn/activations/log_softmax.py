@@ -1,6 +1,7 @@
 from mygrad.nnet.activations import logsoftmax as mygrad_log_softmax
 
-__all__ = ['log_softmax']
+__all__ = ["log_softmax"]
+
 
 def log_softmax(x):
     """ Returns the log softmax of x along its trailing dimension:

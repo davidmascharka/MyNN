@@ -27,6 +27,7 @@ class dropout:
     >>> dropout(x, prob_dropout=0.5)
     Tensor([2., 4., 0.])
     """
+
     def __init__(self, prob_dropout):
         """ Parameters
             ----------
@@ -53,7 +54,8 @@ class dropout:
         """
         if not self.p_dropout:
             return x
-        return x * np.random.binomial(1, (1 - self.p_dropout), x.shape) / (1 - self.p_dropout)
+        drop_mask = np.random.binomial(1, (1 - self.p_dropout), x.shape)
+        return x * drop_mask / (1 - self.p_dropout)
 
     @property
     def parameters(self):

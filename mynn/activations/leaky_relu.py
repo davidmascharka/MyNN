@@ -1,6 +1,7 @@
 from mygrad import maximum, minimum
 
-__all__ = ['leaky_relu']
+__all__ = ["leaky_relu"]
+
 
 def leaky_relu(x, slope):
     """ Returns the leaky rectified linear activation elementwise along x. The leaky ReLU is given

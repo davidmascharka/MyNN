@@ -1,5 +1,6 @@
 from .sigmoid import sigmoid
 
+
 def glu(x, dim=-1):
     """ Returns the Gated Linear Unit A * σ(B), where A and B are split from `x`.
 
@@ -29,11 +30,15 @@ def glu(x, dim=-1):
     """
     first_idx = list(slice(None) for _ in x.shape)
     second_idx = list(slice(None) for _ in x.shape)
-    first_idx[dim] = slice(0, x.shape[dim]//2)
-    second_idx[dim] = slice(x.shape[dim]//2, None)
+    first_idx[dim] = slice(0, x.shape[dim] // 2)
+    second_idx[dim] = slice(x.shape[dim] // 2, None)
 
     first_half = x[tuple(first_idx)]
     second_half = x[tuple(second_idx)]
 
-    assert first_half.shape == second_half.shape, 'The shapes after splitting must be the same'
+    if first_half.shape != second_half.shape:
+        raise ValueError(
+            f"The shapes after splitting must be the same but got {first_half.shape} "
+            "and {second_half.shape}"
+        )
     return first_half * sigmoid(second_half)

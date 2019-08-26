@@ -1,6 +1,7 @@
 import numpy as np
 from mygrad import Tensor
 
+
 def identity(size):
     """ Initialize the identity matrix of dimension `size`x`size`.
 
