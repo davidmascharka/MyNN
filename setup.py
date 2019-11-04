@@ -21,7 +21,7 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.7",
     "Topic :: Scientific/Engineering",
 ]
-INSTALL_REQUIRES = ['numpy >= 1.13', 'numba >= 0.38', 'mygrad >= 1.0']
+INSTALL_REQUIRES = ['numpy >= 1.13', 'mygrad >= 1.0']
 TESTS_REQUIRE = ['pytest >= 3.8', 'hypothesis >= 4.6']
 LONG_DESCRIPTION = """
 MyNN is a simple NumPy-centric neural network library that builds on top of MyGrad. It provides
