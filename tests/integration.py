@@ -92,7 +92,7 @@ class ToyData:
             y_labels[ix, j] = 1
 
         train_ids = np.concatenate(
-            [np.random.choice(range(1000 * i, 1000 * (i + 1)), n_train, replace=False) for i in range(K)]
+            [np.random.choice(range(1000 * i, 1000 * (i + 1)), n_train, replace=False) for i in range(3)]
         )
         train_ids = np.random.choice(train_ids, 3 * n_train, replace=False)
         y_ids = np.random.choice(list(set(range(3 * 1000)) - set(train_ids)), 3 * n_val, replace=False)
