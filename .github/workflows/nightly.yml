@@ -30,4 +30,4 @@ jobs:
         cd ..
     - name: Run integration test
       run: |
-        python tests/integration
+        python tests/integration.py
