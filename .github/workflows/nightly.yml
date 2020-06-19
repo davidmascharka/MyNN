@@ -28,6 +28,7 @@ jobs:
         cd MyGrad
         python setup.py develop
         cd ..
+        python setup.py develop
     - name: Run integration test
       run: |
         python tests/integration.py
