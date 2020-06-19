@@ -1,4 +1,7 @@
-""" Train a network over the examples and ensure performance is acceptable. """
+""" 
+Train the examples and ensure performance is acceptable. This is intended to be a placeholder to ensure
+nothing in this package breaks when MyGrad updates until they're merged.
+"""
 
 from pathlib import Path
 
@@ -26,27 +29,32 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
     import urllib.request
     import gzip
     import os
-    urls = dict(tr_img="train-images-idx3-ubyte.gz", tr_lbl="train-labels-idx1-ubyte.gz",
-                te_img="t10k-images-idx3-ubyte.gz", te_lbl="t10k-labels-idx1-ubyte.gz")
+    urls = dict(
+        tr_img="train-images-idx3-ubyte.gz",
+        tr_lbl="train-labels-idx1-ubyte.gz",
+        te_img="t10k-images-idx3-ubyte.gz",
+        te_lbl="t10k-labels-idx1-ubyte.gz",
+    )
 
     data = {}
     for type_ in ["tr", "te"]:
         img_key = type_ + "_img"
         lbl_key = type_ + "_lbl"
-        print("Downloading from: {}".format(server_url + urls[img_key]))
+        print(f"Downloading from: {server_url + urls[img_key]}")
         with urllib.request.urlopen(server_url + urls[img_key]) as response:
             try:
-                with open(tmp_file, 'wb') as handle:
+                with open(tmp_file, "wb") as handle:
                     handle.write(response.read())
 
                 if check_sums is not None and isinstance(check_sums[urls[img_key]], str):
                     # check md5
                     expected = check_sums[urls[img_key]]
                     found = _md5_check(tmp_file)
-                    msg = "md5 checksum did not match!.. deleting file:\nexpected: {}\nfound: {}".format(expected, found)
+                    msg = f"md5 checksum did not match!.. deleting file:\nexpected: {expected}\nfound: {found}"
                     assert expected == found, msg
                 elif check_sums is not None and isinstance(check_sums[urls[img_key]], int):
-                    os.path.getsize(tmp_file) == check_sums[urls[img_key]], "downloaded filesize is bad!.. deleting file"
+                    msg = "downloaded filesize is bad!.. deleting file"
+                    assert os.path.getsize(tmp_file) == check_sums[urls[img_key]], msg
 
                 with gzip.open(tmp_file, "rb") as uncompressed:
                     tmp = np.frombuffer(uncompressed.read(), dtype=np.uint8, offset=16)
@@ -54,21 +62,21 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
                 if os.path.isfile(tmp_file):
                     os.remove(tmp_file)
 
-        print("Downloading from: {}".format(server_url + urls[lbl_key]))
+        print(f"Downloading from: {server_url + urls[lbl_key]}")
         with urllib.request.urlopen(server_url + urls[lbl_key]) as response:
             try:
-                with open(tmp_file, 'wb') as handle:
+                with open(tmp_file, "wb") as handle:
                     handle.write(response.read())
 
                 if check_sums is not None and isinstance(check_sums[urls[img_key]], str):
                     # check md5
                     expected = check_sums[urls[lbl_key]]
                     found = _md5_check(tmp_file)
-                    msg = "md5 checksum did not match!.. deleting file:\nexpected: {}\nfound: {}".format(expected, found)
+                    msg = f"md5 checksum did not match!.. deleting file:\nexpected: {expected}\nfound: {found}"
                     assert expected == found, msg
                 elif check_sums is not None and isinstance(check_sums[urls[img_key]], int):
-                    # check filesize
-                    os.path.getsize(tmp_file) == check_sums[urls[img_key]], "downloaded filesize is bad!.. deleting file"
+                    msg = "downloaded filesize is bad!.. deleting file"
+                    os.path.getsize(tmp_file) == check_sums[urls[img_key]], msg
 
                 with gzip.open(tmp_file, "rb") as uncompressed:
                     tmp_lbls = np.frombuffer(uncompressed.read(), dtype=np.uint8, offset=8)
@@ -79,16 +87,15 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
         data[img_key] = tmp.reshape(tmp_lbls.shape[0], 1, 28, 28)
         data[lbl_key] = tmp_lbls
 
-    print("Saving to: {}".format(path))
+    print(f"Saving to: {path}")
     with Path(path).open(mode="wb") as f:
-        np.savez_compressed(f, x_train=data["tr_img"], y_train=data["tr_lbl"],
-                            x_test=data["te_img"], y_test=data["te_lbl"])
+        np.savez_compressed(
+            f, x_train=data["tr_img"], y_train=data["tr_lbl"], x_test=data["te_img"], y_test=data["te_lbl"]
+        )
 
 
 def download_mnist():
     path = "mnist.npz"
-    tmp_file = "__mnist.bin"
-
     if Path(path).is_file():
         return None  # already exists
 
@@ -100,18 +107,18 @@ def download_mnist():
         "t10k-images-idx3-ubyte.gz": 28881,
         "t10k-labels-idx1-ubyte.gz": 4542,
     }
-    _download_mnist(path, server_url=server_url, tmp_file=tmp_file, check_sums=check_file_sizes)
+    _download_mnist(path, server_url=server_url, tmp_file="__mnist.bin", check_sums=check_file_sizes)
 
 
 def load_mnist(fname="mnist.npz"):
     with np.load(fname) as data:
-        out = tuple(data[str(key)] for key in ['x_train', 'y_train', 'x_test', 'y_test'])
+        out = tuple(data[str(key)] for key in ["x_train", "y_train", "x_test", "y_test"])
     print("mnist loaded")
     return out
 
 
 class ToyData:
-    def __init__(self, num_classes=3, points_per_class=120, num_revolutions=1.0, tendril_noise=0.2, seed_value=None):
+    def __init__(self, num_classes=3, points_per_class=120, num_revolutions=1.0, tendril_noise=0.2):
         """
         Parameters
         ----------
@@ -157,35 +164,15 @@ class ToyData:
         self.y_test = y_labels[y_ids,].astype("float32")
 
     def load_data(self):
-        """
-        Returns
-        -------
-        Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
-            Training and validation data/labels.
-        """
         return (self.x_train, np.argmax(self.y_train, axis=-1), self.x_test, np.argmax(self.y_test, axis=-1))
 
 
 class SpiralModel:
-    """ A simple 2-layer neural network. """
-
     def __init__(self, *, num_neurons=100, num_classes=3, num_input_dims=2):
         self.layer1 = dense(num_input_dims, num_neurons)
         self.layer2 = dense(num_neurons, num_classes)
 
     def __call__(self, x):
-        """ Perform a forward pass of the model.
-
-        Parameters
-        ----------
-        x : Union[numpy.ndarray, mygrad.Tensor]
-            The data to send through the model.
-
-        Returns
-        -------
-        mygrad.Tensor
-            The output logprobs of the model, obtained by taking the log_softmax.
-        """
         return self.layer2(relu(self.layer1(x)))
 
     @property
@@ -243,7 +230,7 @@ def train_spiral():
 class MnistModel:
     def __init__(self):
         init = glorot_uniform
-        args = {'gain': np.sqrt(2)}
+        args = {"gain": np.sqrt(2)}
         self.conv1 = conv(1, 16, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
         self.conv2 = conv(16, 16, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
         self.conv3 = conv(16, 32, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
