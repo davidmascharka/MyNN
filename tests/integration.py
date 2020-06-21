@@ -1,6 +1,18 @@
+<<<<<<< HEAD
 """ Train a network over the examples and ensure performance is acceptable. """
 
 from pathlib import Path
+=======
+""" 
+Train the examples and ensure performance is acceptable. This is intended to be a placeholder to ensure
+nothing in this package breaks when MyGrad updates until they're merged.
+"""
+
+import gzip
+import os
+from pathlib import Path
+import urllib.request
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
 
 import numpy as np
 
@@ -12,6 +24,7 @@ from mynn.optimizers import SGD
 from mygrad.nnet.layers.pooling import max_pool
 
 
+<<<<<<< HEAD
 def _md5_check(fname):
     """ Reads in data from disk and returns md5 hash"""
     import hashlib
@@ -28,11 +41,24 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
     import os
     urls = dict(tr_img="train-images-idx3-ubyte.gz", tr_lbl="train-labels-idx1-ubyte.gz",
                 te_img="t10k-images-idx3-ubyte.gz", te_lbl="t10k-labels-idx1-ubyte.gz")
+=======
+def download_mnist(path=Path("mnist.npz"), server_url="http://yann.lecun.com/exdb/mnist/", tmp_file="__mnist.bin"):
+    if Path(path).is_file():
+        return None  # already exists
+
+    urls = dict(
+        tr_img="train-images-idx3-ubyte.gz",
+        tr_lbl="train-labels-idx1-ubyte.gz",
+        te_img="t10k-images-idx3-ubyte.gz",
+        te_lbl="t10k-labels-idx1-ubyte.gz",
+    )
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
 
     data = {}
     for type_ in ["tr", "te"]:
         img_key = type_ + "_img"
         lbl_key = type_ + "_lbl"
+<<<<<<< HEAD
         print("Downloading from: {}".format(server_url + urls[img_key]))
         with urllib.request.urlopen(server_url + urls[img_key]) as response:
             try:
@@ -48,12 +74,21 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
                 elif check_sums is not None and isinstance(check_sums[urls[img_key]], int):
                     os.path.getsize(tmp_file) == check_sums[urls[img_key]], "downloaded filesize is bad!.. deleting file"
 
+=======
+        print(f"Downloading from: {server_url + urls[img_key]}")
+        with urllib.request.urlopen(server_url + urls[img_key]) as response:
+            try:
+                with open(tmp_file, "wb") as handle:
+                    handle.write(response.read())
+
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
                 with gzip.open(tmp_file, "rb") as uncompressed:
                     tmp = np.frombuffer(uncompressed.read(), dtype=np.uint8, offset=16)
             finally:
                 if os.path.isfile(tmp_file):
                     os.remove(tmp_file)
 
+<<<<<<< HEAD
         print("Downloading from: {}".format(server_url + urls[lbl_key]))
         with urllib.request.urlopen(server_url + urls[lbl_key]) as response:
             try:
@@ -70,6 +105,14 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
                     # check filesize
                     os.path.getsize(tmp_file) == check_sums[urls[img_key]], "downloaded filesize is bad!.. deleting file"
 
+=======
+        print(f"Downloading from: {server_url + urls[lbl_key]}")
+        with urllib.request.urlopen(server_url + urls[lbl_key]) as response:
+            try:
+                with open(tmp_file, "wb") as handle:
+                    handle.write(response.read())
+
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
                 with gzip.open(tmp_file, "rb") as uncompressed:
                     tmp_lbls = np.frombuffer(uncompressed.read(), dtype=np.uint8, offset=8)
             finally:
@@ -79,6 +122,7 @@ def _download_mnist(path, server_url, tmp_file, check_sums=None):
         data[img_key] = tmp.reshape(tmp_lbls.shape[0], 1, 28, 28)
         data[lbl_key] = tmp_lbls
 
+<<<<<<< HEAD
     print("Saving to: {}".format(path))
     with Path(path).open(mode="wb") as f:
         np.savez_compressed(f, x_train=data["tr_img"], y_train=data["tr_lbl"],
@@ -101,16 +145,28 @@ def download_mnist():
         "t10k-labels-idx1-ubyte.gz": 4542,
     }
     _download_mnist(path, server_url=server_url, tmp_file=tmp_file, check_sums=check_file_sizes)
+=======
+    print(f"Saving to: {path}")
+    with Path(path).open(mode="wb") as f:
+        np.savez_compressed(
+            f, x_train=data["tr_img"], y_train=data["tr_lbl"], x_test=data["te_img"], y_test=data["te_lbl"]
+        )
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
 
 
 def load_mnist(fname="mnist.npz"):
     with np.load(fname) as data:
+<<<<<<< HEAD
         out = tuple(data[str(key)] for key in ['x_train', 'y_train', 'x_test', 'y_test'])
+=======
+        out = tuple(data[str(key)] for key in ["x_train", "y_train", "x_test", "y_test"])
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
     print("mnist loaded")
     return out
 
 
 class ToyData:
+<<<<<<< HEAD
     def __init__(self, num_classes=3, points_per_class=120, num_revolutions=1.0, tendril_noise=0.2, seed_value=None):
         """
         Parameters
@@ -140,15 +196,36 @@ class ToyData:
             r = np.linspace(0.0, 1, N)  # radius
             t = np.linspace(0, 2 * np.pi * num_revolutions, N) + np.random.randn(N) * tendril_noise  # theta
             t += j / K * 2 * np.pi  # phase-shift to offset subsequent tendrils
+=======
+    def __init__(self):
+        n_train = round(1000 // 1.2)
+        n_val = 1000 - n_train
+        self._coords = np.zeros((1000 * 3, 2))
+        self._labels = np.zeros(1000 * 3, dtype=np.uint8)
+
+        y_labels = np.zeros((1000 * 3, 3), dtype=np.uint8)
+        for j in range(3):
+            ix = range(1000 * j, 1000 * (j + 1))
+            r = np.linspace(0.0, 1, 1000)
+            t = np.linspace(0, 2 * np.pi, 1000) + np.random.randn(1000) * 0.2
+            t += j / 3 * 2 * np.pi
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
             self._coords[ix] = np.column_stack((r * np.sin(t), r * np.cos(t)))
             self._labels[ix] = j
             y_labels[ix, j] = 1
 
         train_ids = np.concatenate(
+<<<<<<< HEAD
             [np.random.choice(range(N * i, N * (i + 1)), n_train, replace=False) for i in range(K)]
         )
         train_ids = np.random.choice(train_ids, K * n_train, replace=False)
         y_ids = np.random.choice(list(set(range(K * N)) - set(train_ids)), K * n_val, replace=False)
+=======
+            [np.random.choice(range(1000 * i, 1000 * (i + 1)), n_train, replace=False) for i in range(3)]
+        )
+        train_ids = np.random.choice(train_ids, 3 * n_train, replace=False)
+        y_ids = np.random.choice(list(set(range(3 * 1000)) - set(train_ids)), 3 * n_val, replace=False)
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
 
         self.x_train = self._coords[train_ids,].astype("float32")
         self.y_train = y_labels[train_ids,].astype("float32")
@@ -157,16 +234,20 @@ class ToyData:
         self.y_test = y_labels[y_ids,].astype("float32")
 
     def load_data(self):
+<<<<<<< HEAD
         """
         Returns
         -------
         Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
             Training and validation data/labels.
         """
+=======
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
         return (self.x_train, np.argmax(self.y_train, axis=-1), self.x_test, np.argmax(self.y_test, axis=-1))
 
 
 class SpiralModel:
+<<<<<<< HEAD
     """ A simple 2-layer neural network. """
 
     def __init__(self, *, num_neurons=100, num_classes=3, num_input_dims=2):
@@ -186,6 +267,13 @@ class SpiralModel:
         mygrad.Tensor
             The output logprobs of the model, obtained by taking the log_softmax.
         """
+=======
+    def __init__(self):
+        self.layer1 = dense(2, 100)
+        self.layer2 = dense(100, 3)
+
+    def __call__(self, x):
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
         return self.layer2(relu(self.layer1(x)))
 
     @property
@@ -226,11 +314,19 @@ def eval_epoch(test_data, test_labels, model, batch_size=64):
 
 
 def train_spiral():
+<<<<<<< HEAD
     toy_data = ToyData(points_per_class=1000, num_classes=3)
 
     train_data, train_labels, test_data, test_labels = toy_data.load_data()
 
     model = SpiralModel(num_neurons=100, num_classes=3, num_input_dims=2)
+=======
+    toy_data = ToyData()
+
+    train_data, train_labels, test_data, test_labels = toy_data.load_data()
+
+    model = SpiralModel()
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
     optim = SGD(model.parameters, learning_rate=0.01, momentum=0.99)
     for _ in range(30):
         train_epoch(train_data=train_data, train_labels=train_labels, model=model, optim=optim)
@@ -243,7 +339,11 @@ def train_spiral():
 class MnistModel:
     def __init__(self):
         init = glorot_uniform
+<<<<<<< HEAD
         args = {'gain': np.sqrt(2)}
+=======
+        args = {"gain": np.sqrt(2)}
+>>>>>>> 57c25c6739ddee73c64e59c3332257b91cce70ce
         self.conv1 = conv(1, 16, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
         self.conv2 = conv(16, 16, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
         self.conv3 = conv(16, 32, 3, 3, padding=1, weight_initializer=init, weight_kwargs=args)
