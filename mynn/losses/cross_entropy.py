@@ -1,4 +1,4 @@
-from mynn.activations.log_softmax import log_softmax
+from mynn.activations import log_softmax
 from mynn.losses.negative_log_likelihood import negative_log_likelihood
 from mygrad.nnet.losses import softmax_crossentropy as mygrad_softmax_cross_entropy
 
