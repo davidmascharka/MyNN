@@ -1,6 +1,6 @@
 from mygrad import Tensor
 
-from mynn.activations.leaky_relu import leaky_relu
+from mynn.activations import leaky_relu
 
 
 class prelu:
