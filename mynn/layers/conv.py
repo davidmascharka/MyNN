@@ -70,7 +70,7 @@ class conv:
         mygrad.Tensor
             The result of convolving `x` with this layer's `weight`, then adding its `bias`.
         '''
-        return conv_nd(x, self.weight, self.stride, self.padding) + self.bias
+        return conv_nd(x, self.weight, stride=self.stride, padding=self.padding) + self.bias
 
     @property
     def parameters(self):
@@ -81,4 +81,4 @@ class conv:
         Tuple[mygrad.Tensor, mygrad.Tensor]
             The weight and bias of this layer.
         '''
-        return (self.weight, self.bias)
+        return self.weight, self.bias
