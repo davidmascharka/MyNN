@@ -19,7 +19,6 @@ import hypothesis.extra.numpy as hnp
        grad=st.floats(-1, 1))
 def test_focal_loss(num_datum, num_classes, alpha, gamma, data, grad):
 
-
     scores = data.draw(hnp.arrays(shape=(num_datum, num_classes),
                                   dtype=float,
                                   elements=st.floats(1, 100)))
@@ -38,13 +37,11 @@ def test_focal_loss(num_datum, num_classes, alpha, gamma, data, grad):
     mygrad_focal_loss = sum(truth * (-alpha * (1 - probs + 1e-14)**gamma * log(probs))) / num_datum
     mygrad_focal_loss.backward(grad)
 
-    nn_loss = softmax_focal_loss(scores_nn, targets, alpha=alpha, gamma=gamma)
+    nn_loss = softmax_focal_loss(scores_nn, targets, alpha=alpha, gamma=gamma).mean()
     nn_loss.backward(grad)
 
     assert isinstance(nn_loss, Tensor) and nn_loss.ndim == 0
     assert_allclose(nn_loss.data, mygrad_focal_loss.data, atol=1e-4, rtol=1e-4)
     assert_allclose(scores_nn.grad, scores_mygrad.grad, atol=1e-4, rtol=1e-4)
 
-    nn_loss.null_gradients()
-    assert scores_nn.grad is None
 
