@@ -7,14 +7,14 @@ __all__ = ["huber_loss"]
 
 
 class HuberLoss(Operation):
-    """ Returns the Huber loss (smooth L1).
+    r""" Returns the Huber loss (smooth L1).
 
     Extended Description
     --------------------
     The Huber loss is given by
 
     .. math::
-        L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l} 
+        L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l}
             \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
             \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
     """
@@ -66,7 +66,7 @@ class HuberLoss(Operation):
 
 
 def huber_loss(x, y, *, delta=1):
-    """ Returns the Huber loss (smooth L1).
+    r""" Returns the Huber loss (smooth L1).
 
     Parameters
     ----------
@@ -89,7 +89,7 @@ def huber_loss(x, y, *, delta=1):
     The Huber loss is given by
 
     .. math::
-        L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l} 
+        L_\delta(x, y) = \frac{1}{N}\sum\limits_1^N \bigl\{ \begin{array}{l l}
             \frac{(x_i - y_i)^2}{2} & |x_i - y_i| \leq \delta\\
             \delta|x_i - y_i| - \frac{\delta}{2} & |x_i - y_i| > \delta\end{array}
 
