@@ -2,8 +2,7 @@ import numpy as np
 
 from mygrad.nnet.layers.conv import conv_nd
 
-from mynn.initializers.uniform import uniform
-from mynn.initializers.constant import constant
+from mynn.initializers import constant, uniform
 
 
 class conv:
