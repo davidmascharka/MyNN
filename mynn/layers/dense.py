@@ -1,7 +1,6 @@
 from mygrad import matmul
 
-from mynn.initializers.uniform import uniform
-from mynn.initializers.constant import constant
+from mynn.initializers import constant, uniform
 
 
 class dense:
